@@ -7,12 +7,12 @@ Project 1 : "agendaJS"
 ---------------
 It uses AngularJS and MogoDB to offer an agenda website.
 
-Installation procedure :
-# todo
+### Installation procedure :
+* todo
 
 Project 2 : "agendApp"
 -----------------------
 It uses Javascript and PHP to offer an agenda Chrome app.
 
-Installation procedure :
-# todo
+### Installation procedure :
+* todo
