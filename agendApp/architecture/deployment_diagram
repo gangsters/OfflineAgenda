@@ -1,0 +1,50 @@
+@startuml
+
+title agendApp deployment diagram
+
+'--------------------------------
+' THE CLIENT SIDE
+node "Browser OR Google Chrome Platform Container" {
+	[Presentation layer]
+	[Controller layer]
+	[Asynchronisation layer]
+	
+	database "web client database" {
+		[HTML5 indexed database]	
+	}
+	() "HTML5 indexed database API" <-left-> [HTML5 indexed database]
+
+} 
+
+'--------------------------------
+' THE WEB SERVER SIDE
+node "web server Apache2" {
+	[Database interface]
+}
+
+'--------------------------------
+' THE SERVER-SIDE DATABASE
+database "database server" {
+	[MySQL database]
+}
+
+'--------------------------------
+'HERE ARE THE RELATIONS
+' within browser
+[Presentation layer] --> [Controller layer] : "user action"
+[Presentation layer] <-- [Controller layer] : "update"
+[Controller layer] --> [HTML5 indexed database API] : "update"
+[Controller layer] <-- [HTML5 indexed database API] : "notify"
+
+'other relations
+User -- [Presentation layer]
+
+[MySQL database] --> [Database interface] : "notify"
+[MySQL database] <-- [Database interface] : "update"
+
+[Database interface] --> [Asynchronisation layer] : "1 or 2: notify changes"
+[HTML5 indexed database API] --> [Asynchronisation layer] : "1 or 2: notify changes"
+[Asynchronisation layer] <-- [Asynchronisation layer] : "2: resolve conflicts"
+[Database interface] <-- [Asynchronisation layer] : "3: push merged data"
+[HTML5 indexed database API] <-- [Asynchronisation layer] : "3: push merged data"  
+@enduml
