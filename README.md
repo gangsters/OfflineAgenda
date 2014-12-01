@@ -15,4 +15,4 @@ Project 2 : "agendApp"
 It uses Javascript and PHP to offer an agenda Chrome app.
 
 ### Installation procedure :
-* todo
+* todo
