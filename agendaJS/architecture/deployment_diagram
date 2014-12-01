@@ -1,0 +1,48 @@
+@startuml
+
+title agendaJS deployment diagram
+
+'--------------------------------
+' THE CLIENT SIDE
+node "Browser" {
+	[Presentation layer]
+	[Controller layer]
+	
+	database "web client database" {
+		[HTML5 indexed database]	
+	}
+} 
+
+'--------------------------------
+' THE WEB SERVER SIDE
+node "JS web server" {
+	[RESTful API]
+	[Asynchronisation layer]
+}
+
+'--------------------------------
+' THE SERVER-SIDE DATABASE
+database "server database" {
+	[MongoDB NoSql database]
+}
+
+'--------------------------------
+'HERE ARE THE RELATIONS
+[MongoDB NoSql database] --> [Asynchronisation layer] : "1 or 2 : notify changes"
+[MongoDB NoSql database] <-- [Asynchronisation layer] : "3 : push merged data"
+[Asynchronisation layer] <-- [Asynchronisation layer] : "2: resolve conflicts"
+[RESTful API] <-- [Asynchronisation layer] : "3: push merged data"
+[RESTful API] --> [Asynchronisation layer] : "1 or 2: notify changes"
+
+[Controller layer] --> [RESTful API] : "request"
+[Controller layer] <-- [RESTful API] : "respond"
+
+[Presentation layer] --> [Controller layer] : "user action"
+[Presentation layer] <-- [Controller layer] : "update"
+[Controller layer] --> [HTML5 indexed database] : "update"
+[Controller layer] <-- [HTML5 indexed database] : "notify"
+
+'other relations
+User -- [Presentation layer]
+
+@enduml
