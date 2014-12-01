@@ -5,7 +5,7 @@ This project is part of a course of conception in system information architectur
 
 Project 1 : "agendaJS"
 ---------------
-It uses AngularJS and MogoDB to offer an agenda website.
+It uses AngularJS and MongoDB to offer an agenda WebApp.
 
 ### Installation procedure :
 * todo
