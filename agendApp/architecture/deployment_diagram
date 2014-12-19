@@ -1,13 +1,13 @@
 @startuml
 
-title agendApp deployment diagram
+title AgendApp Deployment Diagram
 
 '--------------------------------
 ' THE CLIENT SIDE
-node "Browser OR Google Chrome Platform Container" {
-	[Presentation layer]
-	[Controller layer]
-	[Asynchronisation layer]
+node "Browser OR Chrome Apps Container" {
+	[View]
+	[Controller]
+	[Model]
 	
 	database "web client database" {
 		[HTML5 indexed database]	
@@ -18,33 +18,37 @@ node "Browser OR Google Chrome Platform Container" {
 
 '--------------------------------
 ' THE WEB SERVER SIDE
-node "web server Apache2" {
-	[Database interface]
+node "Web Server Apache2" {
+	[External Model]
+	() "MySQL driver"
 }
 
 '--------------------------------
 ' THE SERVER-SIDE DATABASE
-database "database server" {
+database "Database Server" {
 	[MySQL database]
 }
+() "HTTP"
 
 '--------------------------------
 'HERE ARE THE RELATIONS
 ' within browser
-[Presentation layer] --> [Controller layer] : "user action"
-[Presentation layer] <-- [Controller layer] : "update"
-[Controller layer] --> [HTML5 indexed database API] : "update"
-[Controller layer] <-- [HTML5 indexed database API] : "notify"
+[View] --> [Controller] : "user action"
+[View] <-- [Controller] : "update"
+[Controller] --> [Model] : "CRUD"
+[Model] <--> [HTML5 indexed database API] : "CRUD"
 
 'other relations
-User -- [Presentation layer]
+User -- [View]
 
-[MySQL database] --> [Database interface] : "notify"
-[MySQL database] <-- [Database interface] : "update"
+[MySQL database] <--> [MySQL driver]
+[Controller] <-- [Model] : "notify changes"
+[Model] --> [Model] : "resolve conflicts"
 
-[Database interface] --> [Asynchronisation layer] : "1 or 2: notify changes"
-[HTML5 indexed database API] --> [Asynchronisation layer] : "1 or 2: notify changes"
-[Asynchronisation layer] <-- [Asynchronisation layer] : "2: resolve conflicts"
-[Database interface] <-- [Asynchronisation layer] : "3: push merged data"
-[HTML5 indexed database API] <-- [Asynchronisation layer] : "3: push merged data"  
+[External Model] <-left-> [MySQL driver] : "CRUD"
+[External Model] --> [HTTP] : "notify changes"
+[HTTP] -left-> [Model]
+[External Model] <-- [HTTP] 
+[HTTP] <-left- [Model] : "push merged data"  
+
 @enduml
