@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="calendarDemoApp" id="top">
+<head>
+    <title>Le Calendrier des Gangters</title>
+    <link rel="icon" href="favicon.ico" />
+    <link rel="stylesheet" href="../bower_components/bootstrap-css/css/bootstrap.css" />
+    <link rel="stylesheet" href="../bower_components/fullcalendar/dist/fullcalendar.css">
+    <link rel="stylesheet" href="project.css" />
+
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+
+    <script src="../bower_components/moment/moment.js"></script>
+    <script src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="../bower_components/fullcalendar/dist/gcal.js"></script>
+    <script src="../src/calendar.js"></script>
+    <script src="../src/project.js"></script>
+    <script src="lib/pouchdb/dist/pouchdb.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<body data-spy="scroll">
+<div role="main">
+    <div class="container">
+        <section id="directives-calendar" ng-controller="CalendarCtrl">
+            <div class="page-header">
+                <h1>Calendrier Gangster</h1> <button id="online" class="btn btn-info" ng-click="toogleOffline()">{{onlineBtn}}</button>
+            </div>
+            <div class="well">
+                <div class="row-fluid">
+                   <div class="span4">
+                      <div>
+                        <h4>{{newEvent}}</h4>
+                        <input type="text" placeholder="Nom" ng-model="eventName"/><br/>
+                        <br/>
+                        <label>Début : </label>
+                         <div class="control-group">
+                            <label class="control-label">Date</label>
+                            <div class="controls">
+                              <div class="control-group input-append date form_datetimeD">
+                                <input size="16" type="text" ng-model="transaction.date" data-date-format="yyyy-mm-dd hh:mm" value="">
+                                <span class="add-on"><em class="icon-remove"></em></span>
+                                <span class="add-on"><em class="icon-th"></em></span>
+                              </div>
+                            </div>
+                          </div>
+                        <script type="text/javascript">
+                            $(".form_datetimeD").datetimepicker({
+                                format: "dd/MM/yyyy-hh:mm",
+                                autoclose: true,
+                                todayBtn: true,
+                                pickerPosition: "bottom-left"
+                            });
+                        </script>   
+
+                        <label>Fin : </label>
+                         <div class="control-group">
+                            <label class="control-label">Date</label>
+                            <div class="controls">
+                              <div class="control-group input-append date form_datetimeF">
+                                <input size="16" type="text" ng-model="transaction.date" data-date-format="yyyy-mm-dd hh:mm" value="">
+                                <span class="add-on"><em class="icon-remove"></em></span>
+                                <span class="add-on"><em class="icon-th"></em></span>
+                              </div>
+                            </div>
+                          </div>
+                        <script type="text/javascript">
+                            $(".form_datetimeF").datetimepicker({
+                                format: "dd/MM/yyyy-hh:mm",
+                                autoclose: true,
+                                todayBtn: true,
+                                pickerPosition: "bottom-left"
+                            });
+                        </script>  
+
+                        <button class="btn btn-success" ng-click="addEvent(eventName)">{{submitEvent}}</button>
+                        <button class="btn btn-danger" ng-hide="newEvent == 'Nouveau'" ng-click="remove(eventName)">Supprimer</button>
+                        <button class="btn btn" ng-hide="newEvent == 'Nouveau'" ng-click="annuler()">Annuler</button>
+                      </div>
+                      
+
+                    </div>
+                    <div class="span8">
+                              <div class="alert-success calAlert" ng-show="alertMessage != undefined && alertMessage != ''">
+                                <h4>{{alertMessage}}</h4>
+                              </div>
+                              <div class="btn-toolbar">
+                                <div class="btn-group">
+                                    <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar1')">Jour</button>
+                                    <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar1')">Semaine</button>
+                                    <button class="btn btn-success" ng-click="changeView('month', 'myCalendar1')">Mois</button>
+                                </div>
+                              </div>
+                            <div class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
+                            <div class="btn-group">
+
+                            </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+    </body>
+</html>
