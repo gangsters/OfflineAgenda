@@ -1,5 +1,35 @@
-$(document).ready(function() {
+var agendapp = {
 
+	init: function() {
+		this.model.init();
+		this.view.init();
+		this.controller.init();
+	},
+
+	model: {
+		init: 	function() {
+
+		},
+		fetchEvents: function(start, end, timezone, callback) {
+			// Must return an array of Event Objects via the callback function (See http://fullcalendar.io/docs/event_data/Event_Object/)
+			var events = [
+			{
+				title: 'All Day Event',
+				start: '2014-11-01'
+			},
+			{
+				title: 'Long Event',
+				start: '2014-11-07',
+				end: '2014-11-10'
+			}];
+			callback(events);
+		}
+	},
+
+	view: {
+		init: 	function() {
+			/*** Creating Calendar ***/
+			// See http://fullcalendar.io/docs/ for more informations.
 			$('#agenda').fullCalendar({
 				header: {
 					left: 'prev,next today',
@@ -9,77 +39,53 @@ $(document).ready(function() {
 				defaultDate: '2014-11-12',
 				selectable: true,
 				selectHelper: true,
-				select: function(start, end) {
-					var title = prompt('Event Title:');
-					var eventData;
-					if (title) {
-						eventData = {
-							title: title,
-							start: start,
-							end: end
-						};
-					$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-				}
-				$('#calendar').fullCalendar('unselect');
-			},
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-			{
-				title: 'All Day Event',
-				start: '2014-11-01'
-			},
-			{
-				title: 'Long Event',
-				start: '2014-11-07',
-				end: '2014-11-10'
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: '2014-11-09T16:00:00'
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: '2014-11-16T16:00:00'
-			},
-			{
-				title: 'Conference',
-				start: '2014-11-11',
-				end: '2014-11-13'
-			},
-			{
-				title: 'Meeting',
-				start: '2014-11-12T10:30:00',
-				end: '2014-11-12T12:30:00'
-			},
-			{
-				title: 'Lunch',
-				start: '2014-11-12T12:00:00'
-			},
-			{
-				title: 'Meeting',
-				start: '2014-11-12T14:30:00'
-			},
-			{
-				title: 'Happy Hour',
-				start: '2014-11-12T17:30:00'
-			},
-			{
-				title: 'Dinner',
-				start: '2014-11-12T20:00:00'
-			},
-			{
-				title: 'Birthday Party',
-				start: '2014-11-13T07:00:00'
-			},
-			{
-				title: 'Click for Google',
-				url: 'http://google.com/',
-				start: '2014-11-28'
-			}
-			]
-		});
+				select: agendapp.view.showAddEventForm,
+				editable: true,
+				eventLimit: true,
+				events: agendapp.model.fetchEvents,
+				// events: 
+			});
+		},
+		showAddEventForm: function(start, end) {
+			//TODO: passer start et end par le form
+			$('#add-event-form #start').val(start.format());
+			$('#add-event-form #end').val(end.format());
+			$.blockUI({ message: $('#add-event-popup') });
+		}
+	},
 
+	controller: {
+		init: function() {
+			/*** Adding Form Submition Listeners ***/
+			$('#add-event-form').submit(this.addEvent);
+			$('#edit-event-form').submit(this.editEvent);
+			$('#remove-event-form').submit(this.removeEvent);
+		},
+		addEvent: function(event) {
+			if ($('#add-event-form #title').val()) {
+				var eventData = {
+					title: $('#add-event-form #title').val(),
+					start: $('#add-event-form #start').val(),
+					end: $('#add-event-form #end').val()
+				};
+				console.log(eventData);
+				$('#agenda').fullCalendar('renderEvent', eventData, true); // stick? = true
+			}
+			$.unblockUI();
+			event.preventDefault();
+		},
+		editEvent: function(event) {
+			console.log($('#edit-event-form #title').val());
+			event.preventDefault();
+		},
+		removeEvent: function(event) {
+			console.log($('#remove-event-form #title').val());
+			event.preventDefault();
+		},
+	},
+
+};
+
+$(document).ready(function() {
+	agendapp.init();
 });
