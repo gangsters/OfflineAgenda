@@ -15,7 +15,8 @@ Project 2 : "agendApp"
 It uses Javascript and PHP to offer an agenda Chrome app.
 
 ### Installation procedure :
-* Clone the repository.
+ Clone the repository.
+
 #### Database installation for Ubuntu
  * sudo apt-get install mysql-client
  * cd path_to_repository/OfflineAgenda/agendApp/database
