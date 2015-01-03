@@ -52,6 +52,19 @@ var agendapp = {
 					request.onerror = agendapp.model.localDB.onError;
 				}
 			},
+			removeEvent: function(eventId) {
+				var db = agendapp.model.localDB.db;
+				if(db) {
+					var trans = db.transaction(["event"], "readwrite");
+					var store = trans.objectStore("event");
+					var request = store.delete(eventId);
+					request.onsuccess = function(e) {
+						console.log('Event successfully removed from local database');
+						agendapp.view.refresh();
+					};
+					request.onerror = agendapp.model.localDB.onError;
+				}
+			},
 			onError: function(error) {
 				console.log(error.value);
 			},
@@ -174,6 +187,7 @@ var agendapp = {
 		 * Fetch all events from local database (fullCalendar callback)
 		 */
         fetchEvents: function (start, end, timezone, callback) {
+        	var events = [];
 			var db = agendapp.model.localDB.db;
 			if(db) {
 				// start transaction with the event table (also called object store)
@@ -188,42 +202,15 @@ var agendapp = {
 				cursorRequest.onsuccess = function(e) {
 					var result = e.target.result;
 					if(!!result == false) return;
+					events.push(result.value);
 					//TODO: add result to events var (see below)
 					result.continue();
 				};
-
 				cursorRequest.onerror = agendapp.model.localDB.onError;
+				trans.oncomplete =  function(e) {
+					callback(events);
+				}
 			}
-			// TEST à virer
-			var event1 = new agendapp.model.CalendarEvent('jaune1', '2015-01-02');
-			var event2 = new agendapp.model.CalendarEvent('jaune2', '2015-01-05', '2015-01-08');
-			// Must return an array of Event Objects via the callback function (See http://fullcalendar.io/docs/event_data/Event_Object/)
-			var events = [
-			{
-				id: new Date().getTime(),
-				title: 'All Day Event',
-				start: '2014-11-01'
-			},
-			{
-				id: new Date().getTime(),
-				title: 'Long Event',
-				start: '2014-11-07',
-				end: '2014-11-10'
-			},
-			{
-				id: new Date().getTime(),
-				title: event1.name,
-				start: event1.beginDate,
-				end: '2015-01-02'
-			},
-			{
-				id: new Date().getTime(),
-				title: event2.name,
-				start: event2.beginDate,
-				end: event2.endDate
-			}
-			];
-			callback(events);
 		},
 		
 	},
@@ -335,7 +322,7 @@ var agendapp = {
 		},
 		editEvent: function(jsEvent) {
 			var editedEvents = $('#agenda').fullCalendar('clientEvents',$('#edit-event-form').attr('event-id'));
-			console.log(editedEvents[0].title + "was renamed " + $('#edit-event-form #title').val());
+			console.log(editedEvents[0].title + " was renamed " + $('#edit-event-form #title').val());
 			for (var i = editedEvents.length - 1; i >= 0; i--) {
 				editedEvents[i].title = $('#edit-event-form #title').val();
 				$('#agenda').fullCalendar('updateEvent', editedEvents[i]);
@@ -346,8 +333,7 @@ var agendapp = {
 		},
 		removeEvent: function(jsEvent) {
 			console.log($('#remove-event-form #title').html() + " was removed (id: " + $('#remove-event-form').attr('event-id') + ")");
-			$('#agenda').fullCalendar('removeEvents', $('#remove-event-form').attr('event-id'));
-			//TODO: Enregistrer en BD
+			agendapp.model.localDB.removeEvent($('#remove-event-form').attr('event-id'));
 			$.unblockUI(); // Remove the pop-up
 			jsEvent.preventDefault();
 		},
