@@ -10,6 +10,7 @@
 
 	<script src="../js/moment.min.js" type="text/javascript"></script>
 	<script src="../js/jquery.min.js" type="text/javascript"></script>
+	<script src="../js/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="../js/jquery.blockUI.js" type="text/javascript"></script>
 	<script src="../js/fullcalendar.min.js" type="text/javascript"></script>
 
@@ -24,6 +25,10 @@
 	
 	<div id="agenda"></div>
 	
+	<div id="trash-area">
+		<img id="trash" src="../../res/trash.png" alt="trashcan icon"/>
+	</div>
+
 	<footer>
 		<p>By Gansters Team, INSA Rouen - AgendApp v0.1 - Copyright &copy; 2014-2015</p>
 	</footer>
@@ -55,7 +60,7 @@
 				<input type="text" id="title" name="title" /><br/>
 			</p>
 			<p>
-				<input type="submit" value="Ajouter"/>
+				<input type="submit" value="Modifier"/>
 			</p>
 		</form>
 	</div>
@@ -63,14 +68,14 @@
 	<div id="remove-event-popup" style="cursor: default; display: none;">
 		<form id="remove-event-form">
 			<p>
-				<label for="title">Titre de l'évènement:</label>
-				<input type="text" id="title" name="title" /><br/>
+				Êtes-vous sûr de vouloir supprimer l'évènement "<span id="title"></span>" ?
 			</p>
 			<p>
-				<input type="submit" value="Ajouter"/>
+				<input type="submit" value="Confirmer"/>
 			</p>
 		</form>
 	</div>
+
 
 </body>
 
