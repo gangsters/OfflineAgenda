@@ -130,11 +130,11 @@ var agendapp = {
 				tolerance: "pointer",
 				over: function(event, ui) { // handlerIn
 					console.log('Over !');
-					$('#trash').attr('src','../../res/open-trash.png');
+					$('#trash').attr('src','res/open-trash.png');
 				},
 				out: function(event, ui) { // handlerOut
 					console.log('Out !');
-					$('#trash').attr('src','../../res/trash.png');
+					$('#trash').attr('src','res/trash.png');
 				}
 			});
 		},
