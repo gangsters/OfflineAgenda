@@ -89,8 +89,9 @@
 	 * @return CalendarEvent created. Id may be null.
 	 */
 	function get_event_from_http() {
-		$event_json = json_decode($_GET['event']);
-		if (is_empty($event_json)){
+		$event_json = json_decode($_GET['event'], true);
+		var_dump($event_json);
+		if (empty($event_json)){
 			respond_with_error(
 				'An event must be given with correct syntax.');
 		}
@@ -99,8 +100,10 @@
 			$event = new CalendarEvent();
 			$event->title = $event_json["title"];
 			$event->beginDate = $event_json["beginDate"];
-			$event->endDate = $event_json["endDate"];
-			if (!is_null($event_json["id"])) {
+			if (isset($event_json["endDate"])) {
+				$event->endDate = $event_json["endDate"];
+			}
+			if (isset($event_json["id"])) {
 				$event->id = $event_json["id"];
 			}
 			return $event;

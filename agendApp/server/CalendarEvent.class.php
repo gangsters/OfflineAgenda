@@ -35,7 +35,7 @@
 		 * update, it doesn't matter.
 		 */
 		public function save() {
-			if (!isset($this->id) || is_null($this->id)) {
+			if (!isset($this->id) || empty($this->id)) {
 				$this->db_create();
 			}
 			else{
@@ -47,7 +47,7 @@
 		 * Delete the current object from database.
 		 */
 		public function delete() {
-			if (!isset($this->id) || is_null($this->id)){
+			if (!isset($this->id) || empty($this->id)){
 				throw new Exception ('ID non défini, impossible de supprimer cet Event.');
 			}
 			else{

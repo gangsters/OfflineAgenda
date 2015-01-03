@@ -9,47 +9,39 @@ var agendapp = {
 	model: {
 
 		init: 	function() {
-             var SERVER_INTERFACE_URL = "agendapp/eventInterface.php";
+            var SERVER_INTERFACE_URL = "http://localhost/agendapp/server/eventInterface.php";
             var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
-            /**
-             * Creates a new calendar event instance.
-             * @constructor
-             */
-             function CalendarEvent(name, beginDate, endDate) {
-                // properties
-                this.name = name;
-                this.beginDate = beginDate;
-                this.endDate = endDate;
-            }
             
             /**
              * Creates a new calendar event instance.
              * @constructor
              */
-             function CalendarEvent(name, beginDate) {
+             function CalendarEvent(title, beginDate, endDate) {
                 // properties
-                this.name = name;
+                this.title = title;
                 this.beginDate = beginDate;
+                this.endDate = endDate;
             }
             
             // Methods for CalendarEvent prototype
             // displayAll est un test, il faudra la virer
             CalendarEvent.prototype.displayAll = function() {
-            	return this.name + " " + this.beginDate + " " + this.endDate;
+            	return this.title + " " + this.beginDate + " " + this.endDate;
             };
             
             /**
              * Save the current CalendarEvent to server database
+             * If the returned JSON is incorrect the callback will not be executed. SILENTLY.
+             * This is due to the conversion to JSON function ...
              */
             CalendarEvent.prototype.save_to_server = function() {
-                var request_data = new Object();
-                request_data.query = "save";
-                request_data.event = this;
-                $.getJSON(RELATIVE_SERVER_INTERFACE_URL);
-                console.log('avant save to server');
-                $.getJSON(RELATIVE_SERVER_INTERFACE_URL, request_data, function (result) {
+                var request_data = '';
+                request_data += "query=save";
+                request_data += "&event="+JSON.stringify(this);
+                console.log(request_data);
+                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
                     if (result.error == 'KO') {
-                        console.log('An error occured while saving event in server. Détails : '.result.message);
+                        console.log('An error occured while saving event in server. Details : '.result.message);
                     }
                     else if(result.error == 'OK'){
                         console.log('Event saved to server.');
@@ -58,10 +50,20 @@ var agendapp = {
                         console.log('Unexpected error with server. '.result);
                     }
                 });
-                console.log('fin save to server');
             }
+            
+            /**
+             *
+             */
+            
             // export to agendapp the prototype
             agendapp.model.CalendarEvent = CalendarEvent;
+            // -------->>>> A ENLEVER <<<------------------
+            // ----test saving (update)----
+             //var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
+             //testevent.id = 23;
+             //testevent.save_to_server();
+            //--- test 
         },
 
 
