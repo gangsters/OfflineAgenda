@@ -9,6 +9,8 @@ var agendapp = {
 	model: {
 
 		init: 	function() {
+             var SERVER_INTERFACE_URL = "agendapp/eventInterface.php";
+            var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
             /**
              * Creates a new calendar event instance.
              * @constructor
@@ -36,6 +38,28 @@ var agendapp = {
             	return this.name + " " + this.beginDate + " " + this.endDate;
             };
             
+            /**
+             * Save the current CalendarEvent to server database
+             */
+            CalendarEvent.prototype.save_to_server = function() {
+                var request_data = new Object();
+                request_data.query = "save";
+                request_data.event = this;
+                $.getJSON(RELATIVE_SERVER_INTERFACE_URL);
+                console.log('avant save to server');
+                $.getJSON(RELATIVE_SERVER_INTERFACE_URL, request_data, function (result) {
+                    if (result.error == 'KO') {
+                        console.log('An error occured while saving event in server. Détails : '.result.message);
+                    }
+                    else if(result.error == 'OK'){
+                        console.log('Event saved to server.');
+                    }
+                    else{
+                        console.log('Unexpected error with server. '.result);
+                    }
+                });
+                console.log('fin save to server');
+            }
             // export to agendapp the prototype
             agendapp.model.CalendarEvent = CalendarEvent;
         },
