@@ -53,20 +53,25 @@
 		$query = "SELECT id, title, begin_date, end_date FROM Event";
 		$result= $db->query($query);
 		// create objects and print
-		$events = array();
+		$first_line = true;
+		echo '{"error": "OK", ';
+		echo '"events": [';
 		while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 			$newevent = new CalendarEvent();
 			$newevent->id = utf8_encode($row['id']);
 			$newevent->title = utf8_encode($row['title']);
 			$newevent->beginDate = utf8_encode($row['begin_date']);
 			$newevent->endDate = utf8_encode($row['end_date']);
-			$events[$newevent->id] = $newevent;
-			
+			// stringify
+			if ($first_line) {
+				$first_line=false;
+			}
+			else{
+				echo ',';
+			}
+			echo json_encode($newevent);
 		}
-		echo '{"error": "OK", ';
-		echo '"events": ';
-		echo json_encode($events);
-		echo '}';
+		echo ']}';
 	}
 
 	/**
@@ -89,8 +94,8 @@
 	 * @return CalendarEvent created. Id may be null.
 	 */
 	function get_event_from_http() {
-		$event_json = json_decode($_GET['event']);
-		if (is_empty($event_json)){
+		$event_json = json_decode($_GET['event'], true);
+		if (empty($event_json)){
 			respond_with_error(
 				'An event must be given with correct syntax.');
 		}
@@ -99,8 +104,10 @@
 			$event = new CalendarEvent();
 			$event->title = $event_json["title"];
 			$event->beginDate = $event_json["beginDate"];
-			$event->endDate = $event_json["endDate"];
-			if (!is_null($event_json["id"])) {
+			if (isset($event_json["endDate"])) {
+				$event->endDate = $event_json["endDate"];
+			}
+			if (isset($event_json["id"])) {
 				$event->id = $event_json["id"];
 			}
 			return $event;

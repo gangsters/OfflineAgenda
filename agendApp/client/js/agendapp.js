@@ -61,65 +61,119 @@ var agendapp = {
 			/*** Opening local HTML5 indexed database ***/
 			agendapp.model.localDB.open();
 
-			var SERVER_INTERFACE_URL = "agendapp/eventInterface.php";
-			var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
-			/**
-			 * Creates a new calendar event instance.
-			 * @constructor
-			 */
-			 function CalendarEvent(name, beginDate, endDate) {
-				// properties
-				this.name = name;
-				this.beginDate = beginDate;
-				this.endDate = endDate;
-			}
-			
-			/**
-			 * Creates a new calendar event instance.
-			 * @constructor
-			 */
-			 function CalendarEvent(name, beginDate) {
-				// properties
-				this.name = name;
-				this.beginDate = beginDate;
-			}
-			
-			// Methods for CalendarEvent prototype
-			// displayAll est un test, il faudra la virer
-			CalendarEvent.prototype.displayAll = function() {
-				return this.name + " " + this.beginDate + " " + this.endDate;
-			};
-			
-			/**
-			 * Save the current CalendarEvent to server database
-			 */
-			 CalendarEvent.prototype.save_to_server = function() {
-			 	var request_data = new Object();
-			 	request_data.query = "save";
-			 	request_data.event = this;
-			 	$.getJSON(RELATIVE_SERVER_INTERFACE_URL);
-			 	console.log('avant save to server');
-			 	$.getJSON(RELATIVE_SERVER_INTERFACE_URL, request_data, function (result) {
-			 		if (result.error == 'KO') {
-			 			console.log('An error occured while saving event in server. Détails : ' + result.message);
-			 		}
-			 		else if(result.error == 'OK'){
-			 			console.log('Event saved to server.');
-			 		}
-			 		else{
-			 			console.log('Unexpected error with server. ' + result);
-			 		}
-			 	});
-			 	console.log('fin save to server');
-			 }
-			// export to agendapp the prototype
-			agendapp.model.CalendarEvent = CalendarEvent;
-		},
+            var SERVER_INTERFACE_URL = "http://localhost/agendapp/server/eventInterface.php";
+            var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
+            
+            /**
+             * Creates a new calendar event instance.
+             * @constructor
+             */
+             function CalendarEvent(title, beginDate, endDate) {
+                // properties
+                this.title = title;
+                this.beginDate = beginDate;
+                this.endDate = endDate;
+            }
+            
+            // Methods for CalendarEvent prototype
+            // displayAll est un test, il faudra la virer
+            CalendarEvent.prototype.displayAll = function() {
+            	return this.title + " " + this.beginDate + " " + this.endDate;
+            };
+            
+            /**
+             * Save the current CalendarEvent to server database
+             * If the returned JSON is incorrect the callback will not be executed. SILENTLY.
+             * This is due to the conversion to JSON function ...
+             */
+            CalendarEvent.prototype.save_to_server = function() {
+                var request_data = '';
+                request_data += "query=save";
+                request_data += "&event="+JSON.stringify(this);
+                console.log(request_data);
+                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+                    if (result.error == 'KO') {
+                        console.log('An error occured while saving event in server. Details : '.result.message);
+                    }
+                    else if(result.error == 'OK'){
+                        console.log('Event saved to server.');
+                    }
+                    else{
+                        console.log('Unexpected error with server. '.result);
+                    }
+                });
+            }
+            
+            /**
+             * Delete the current CalendarEvent of server database.
+             */
+            CalendarEvent.prototype.delete_of_server = function () {
+                var request_data = '';
+                request_data += "query=delete";
+                request_data += "&event="+JSON.stringify(this);
+                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+                    if (result.error == 'KO') {
+                        console.log('An error occured while deleting event in server. Details : '.result.message);
+                    }
+                    else if(result.error == 'OK'){
+                        console.log('Event deleted of server.');
+                    }
+                    else{
+                        console.log('Unexpected error with server. '.result);
+                    }
+                });
+            }
+            
+            /**
+             * Get all events stored in server database.
+             */
+            function get_all_events_from_server() {
+                var result = [];
+                var request_data = '';
+                request_data += "query=readAll";
+                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+                    if (result.error == 'KO') {
+                        console.log('An error occured while deleting event in server. Details : '.result.message);
+                    }
+                    else if(result.error == 'OK'){
+                        var events_obj = result.events;
+                        var calendarevents = [];
+                        var arrayLength = events_obj.length;
+                        for (var i = 0; i < arrayLength; i++) {
+                            var newevent = new CalendarEvent(events_obj[i].title, events_obj[i].beginDate, events_obj[i].endDate);
+                            newevent.id = events_obj[i].id;
+                            calendarevents.push(newevent);
+                        }
+                        console.log(arrayLength+' events has been get from server.');
+                        return calendarevents;
+                    }
+                    else{
+                        console.log('Unexpected error with server. '.result);
+                    }
+                });
+            }
+            
+            // export to agendapp the prototype
+            agendapp.model.CalendarEvent = CalendarEvent;
+            // -------->>>> A ENLEVER <<<------------------
+            // ----test saving (update)----
+             var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
+                console.log("mon CalendarEvent ");
+                console.log(testevent);
+             //testevent.id = 23;
+            //var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
+            //testevent.id = 26;
+            // ---- test update ---
+            //testevent.save_to_server();
+            //--- test deletion ----
+            //testevent.delete_of_server();
+            get_all_events_from_server();
+        },
 
 		/**
 		 * Fetch all events from local database (fullCalendar callback)
 		 */
-		fetchEvents: function (start, end, timezone, callback) {
+        fetchEvents: function (start, end, timezone, callback) {
 			var db = agendapp.model.localDB.db;
 			if(db) {
 				// start transaction with the event table (also called object store)

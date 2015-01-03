@@ -12,5 +12,6 @@
   "icons": {
     "16": "res/agendapp-icon-16.png", 
     "128": "res/agendapp-icon-128.png" 
-  }
+  },
+ "permissions": ["http://localhost/agendapp/*"]
 }
