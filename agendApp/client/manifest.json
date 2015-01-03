@@ -6,7 +6,7 @@
   "author": "Jérémy GUILLON, Nicolas LECOMPTE",
   "app": {
     "background": {
-      "scripts": ["src/js/main.js"]
+      "scripts": ["js/main.js"]
     }
   },
   "icons": {
