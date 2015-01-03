@@ -43,7 +43,8 @@ var agendapp = {
 				editable: true,
 				eventLimit: true,
 				events: agendapp.model.fetchEvents,
-				// events: 
+				editable: true,
+				eventDrop: agendapp.controller.dropEvent
 			});
 		},
 		showAddEventForm: function(start, end) {
@@ -73,6 +74,9 @@ var agendapp = {
 			}
 			$.unblockUI();
 			event.preventDefault();
+		},
+		dropEvent: function(event, delta, revertFunc) {
+        	console.log(event.title + " was dropped on " + event.start.format());
 		},
 		editEvent: function(event) {
 			console.log($('#edit-event-form #title').val());
