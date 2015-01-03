@@ -71,7 +71,7 @@ var agendapp = {
 		},
 
 		init: 	function() {
-			/*** Opening local HTML5 indexed database ***/
+			// Opening local HTML5 indexed database
 			agendapp.model.localDB.open();
 
             var SERVER_INTERFACE_URL = "http://localhost/agendapp/server/eventInterface.php";
@@ -88,11 +88,7 @@ var agendapp = {
                 this.endDate = endDate;
             }
             
-            // Methods for CalendarEvent prototype
-            // displayAll est un test, il faudra la virer
-            CalendarEvent.prototype.displayAll = function() {
-            	return this.title + " " + this.beginDate + " " + this.endDate;
-            };
+            /*** METHODS FOR CALENDAR PROTOTYPE ***/
             
             /**
              * Save the current CalendarEvent to server database
@@ -118,6 +114,13 @@ var agendapp = {
             }
             
             /**
+             * Save the current CalendarEvent to local database.
+             */
+            CalendarEvent.prototype.save_to_localdb = function() {
+                //TODO
+            }
+            
+            /**
              * Delete the current CalendarEvent of server database.
              */
             CalendarEvent.prototype.delete_of_server = function () {
@@ -138,49 +141,50 @@ var agendapp = {
             }
             
             /**
-             * Get all events stored in server database.
+             * Delete the curent calendar event from local database.
              */
-            function get_all_events_from_server() {
-                var result = [];
-                var request_data = '';
-                request_data += "query=readAll";
-                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
-                    if (result.error == 'KO') {
-                        console.log('An error occured while deleting event in server. Details : '.result.message);
-                    }
-                    else if(result.error == 'OK'){
-                        var events_obj = result.events;
-                        var calendarevents = [];
-                        var arrayLength = events_obj.length;
-                        for (var i = 0; i < arrayLength; i++) {
-                            var newevent = new CalendarEvent(events_obj[i].title, events_obj[i].beginDate, events_obj[i].endDate);
-                            newevent.id = events_obj[i].id;
-                            calendarevents.push(newevent);
-                        }
-                        console.log(arrayLength+' events has been get from server.');
-                        return calendarevents;
-                    }
-                    else{
-                        console.log('Unexpected error with server. '.result);
-                    }
-                });
+            CalendarEvent.prototype.delete_of_localdb = function() {
+                //TODO
             }
-            
             // export to agendapp the prototype
             agendapp.model.CalendarEvent = CalendarEvent;
-            // -------->>>> A ENLEVER <<<------------------
-            // ----test saving (update)----
-             var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
-                console.log("mon CalendarEvent ");
-                console.log(testevent);
-             //testevent.id = 23;
-            //var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
-            //testevent.id = 26;
-            // ---- test update ---
-            //testevent.save_to_server();
-            //--- test deletion ----
-            //testevent.delete_of_server();
-            get_all_events_from_server();
+        },
+
+        /*** GENERALS MODEL METHODS ***/
+        /**
+         * Get all events stored in server database.
+         */
+        function get_all_events_from_server() {
+            var result = [];
+            var request_data = '';
+            request_data += "query=readAll";
+            $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+                if (result.error == 'KO') {
+                    console.log('An error occured while deleting event in server. Details : '.result.message);
+                }
+                else if(result.error == 'OK'){
+                    var events_obj = result.events;
+                    var calendarevents = [];
+                    var arrayLength = events_obj.length;
+                    for (var i = 0; i < arrayLength; i++) {
+                        var newevent = new CalendarEvent(events_obj[i].title, events_obj[i].beginDate, events_obj[i].endDate);
+                        newevent.id = events_obj[i].id;
+                        calendarevents.push(newevent);
+                    }
+                    console.log(arrayLength+' events has been get from server.');
+                    return calendarevents;
+                }
+                else{
+                    console.log('Unexpected error with server. '.result);
+                }
+            });
+        },
+
+        /**
+         * Get all events stored in local database.
+         */
+        function get_all_events_from_localdb() {
+            //TODO   
         },
 
 		/**
@@ -212,6 +216,52 @@ var agendapp = {
 				}
 			}
 		},
+        
+        /*** SIMPLE FUNCTIONS FOR PERSISTENCE - THIS FUNCTIONS MUST BE CALLED FROM CONTROLLER AND NO OTHER !***/
+        /**
+         * Save a CalendarEvent ; no matter whether you're online or offline.
+         */
+        function save($calendarevent){
+            //TODO check connectivity
+            
+            //TODO if offline, store locally with a tag
+            
+            //TODO if online, get update then store locally and remotely
+        },
+        
+        /**
+         * Delete a CalendarEvent ; no matter whether you're online or offline.
+         */
+        function delete($calendarevent) {
+            //TODO check connectivity
+            
+            //TODO if offline, delete locally with a tag
+            
+            //TODO if online, get update then delete locally and remotely
+        },
+        
+        /**
+         * Set local database and server database to the same version.
+         * Resolve conflicts if they are some.
+         * If online -> online : push merged/new data.
+         * If offline -> online : pull, merge, push.
+         * If offline -> offline : do nothing
+         * This function must be called :
+         * * when local app retrieve connectivity
+         * * each time a modification was made by another client on server database. (publish-subscribe?)
+         */
+        function actualize() {
+            // TODO if online
+            // TODO get all events from server
+            // TODO get all events from local
+            // check what to push.
+            // check if the ID problem
+            // store locally
+            // push back to server if still online
+            // get IDs of pushed events to set the ID locally.
+        }
+        
+
 		
 	},
 
