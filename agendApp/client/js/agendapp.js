@@ -53,17 +53,69 @@ var agendapp = {
             }
             
             /**
-             *
+             * Delete the current CalendarEvent of server database.
              */
+            CalendarEvent.prototype.delete_of_server = function () {
+                var request_data = '';
+                request_data += "query=delete";
+                request_data += "&event="+JSON.stringify(this);
+                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+                    if (result.error == 'KO') {
+                        console.log('An error occured while deleting event in server. Details : '.result.message);
+                    }
+                    else if(result.error == 'OK'){
+                        console.log('Event deleted of server.');
+                    }
+                    else{
+                        console.log('Unexpected error with server. '.result);
+                    }
+                });
+            }
+            
+            /**
+             * Get all events stored in server database.
+             */
+            function get_all_events_from_server() {
+                var result = [];
+                var request_data = '';
+                request_data += "query=readAll";
+                $.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+                    if (result.error == 'KO') {
+                        console.log('An error occured while deleting event in server. Details : '.result.message);
+                    }
+                    else if(result.error == 'OK'){
+                        var events_obj = result.events;
+                        var calendarevents = [];
+                        var arrayLength = events_obj.length;
+                        for (var i = 0; i < arrayLength; i++) {
+                            var newevent = new CalendarEvent(events_obj[i].title, events_obj[i].beginDate, events_obj[i].endDate);
+                            newevent.id = events_obj[i].id;
+                            calendarevents.push(newevent);
+                        }
+                        console.log(arrayLength+' events has been get from server.');
+                        return calendarevents;
+                    }
+                    else{
+                        console.log('Unexpected error with server. '.result);
+                    }
+                });
+            }
             
             // export to agendapp the prototype
             agendapp.model.CalendarEvent = CalendarEvent;
             // -------->>>> A ENLEVER <<<------------------
             // ----test saving (update)----
-             //var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
+             var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
+                console.log("mon CalendarEvent ");
+                console.log(testevent);
              //testevent.id = 23;
-             //testevent.save_to_server();
-            //--- test 
+            //var testevent = new CalendarEvent('js modified', '2015-01-42', '2015-01-43');
+            //testevent.id = 26;
+            // ---- test update ---
+            //testevent.save_to_server();
+            //--- test deletion ----
+            //testevent.delete_of_server();
+            get_all_events_from_server();
         },
 
 
