@@ -35,7 +35,7 @@
 		 * update, it doesn't matter.
 		 */
 		public function save() {
-			if (!isset($this->id) || empty($this->id)) {
+			if ($this->id > 99999999999) { //TODO: Si l'ID (timestamp) est supérieur au dernier id d'insert... Peu probable de dépasser mais y a moyen de faire plus propre.
 				$this->db_create();
 			}
 			else{
@@ -75,6 +75,7 @@
 			$query->bindParam(':begin', $this->beginDate);
 			$query->bindParam(':end', $this->endDate);
 			$query->execute();
+			$this->id = $db->lastInsertId();
 		}
 
 		/**
