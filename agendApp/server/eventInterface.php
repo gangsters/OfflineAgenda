@@ -133,7 +133,7 @@
 	function respond_success(){
 		$response = array();
 		$response['error'] = "OK";
-		$response['id'] = mysql_insert_id(); //TODO: Un truc plus propre que ça :s
+		$response['id'] = $event->id;
 		$json = json_encode($response);
 		echo $json;
 	}

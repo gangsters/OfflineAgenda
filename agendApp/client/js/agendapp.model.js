@@ -97,7 +97,6 @@ agendapp.model = {
 		 */
 		CalendarEvent.prototype.save_to_server = function(callback) {
 			var request_data = '';
-			var self = this;
 			request_data += "query=save";
 			request_data += "&event="+JSON.stringify(this);
 			console.log(request_data);
@@ -129,6 +128,7 @@ agendapp.model = {
 			var request_data = '';
 			request_data += "query=delete";
 			request_data += "&event="+JSON.stringify(this);
+			console.log(request_data);
 			$.getJSON(SERVER_INTERFACE_URL, request_data, callback);
 		}
 
@@ -300,7 +300,7 @@ agendapp.model = {
 		// if online, get update then delete locally and remotely
 		console.log("DELETE");
 		if(IS_ONLINE){
-            success = calendarevent.delete_of_server(function (result) {
+            calendarevent.delete_of_server(function (result) {
 				if (result.error == 'KO') {
 	                calendarevent.isDirty = true;
 	                calendarevent.toDelete = true;
