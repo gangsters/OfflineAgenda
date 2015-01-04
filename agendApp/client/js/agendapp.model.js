@@ -1,5 +1,10 @@
 agendapp.model = {
 
+	SERVER_ADDRESS: "http://localhost:8888", //TODO: Change PORT
+	SERVER_EVENT_SOURCE_URL: "http://localhost:8888/agendapp/server/eventSource.php", //TODO: Change PORT
+	SERVER_INTERFACE_URL: "http://localhost:8888/agendapp/server/eventInterface.php", //TODO: Change PORT
+	RELATIVE_SERVER_INTERFACE_URL: "../server/eventInterface.php",
+
 	localDB: {
 		db: null,
 		open: function() {
@@ -36,9 +41,22 @@ agendapp.model = {
 		},
 	},
 
+	onServerEvent: function(event) {
+		if (event.origin != agendapp.model.SERVER_ADDRESS) {
+			console.log(event.origin);
+		    return;
+		}
+		else if(event.data == "out-of-date") { 
+			// actualize(); //TODO décommenter
+			console.log(agendapp.model.SERVER_EVENT_SOURCE_URL + " : " + event.data);
+		} else if(event.data == "up-to-date") {
+			console.log(agendapp.model.SERVER_EVENT_SOURCE_URL + " : " + event.data);
+		} else {
+			console.log(agendapp.model.SERVER_EVENT_SOURCE_URL + " : " + event.data);
+		}
+	},
+
 	init: 	function() {
-		var SERVER_INTERFACE_URL = "http://localhost:8888/agendapp/server/eventInterface.php"; //TODO: Change PORT
-		var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
         
         /*** handling Offline/online mode ***/
         IS_ONLINE=false; // global variable
@@ -62,6 +80,10 @@ agendapp.model = {
 
 		/*** Opening local HTML5 indexed database ***/
 		agendapp.model.localDB.open();
+
+		/*** Subscribe to server-side events ***/
+		var source = new EventSource(agendapp.model.SERVER_EVENT_SOURCE_URL);
+		source.onmessage = agendapp.model.onServerEvent;
 		
 		/**
 		 * Creates a new calendar event instance.
@@ -100,7 +122,7 @@ agendapp.model = {
 			request_data += "query=save";
 			request_data += "&event="+JSON.stringify(this);
 			console.log(request_data);
-			$.getJSON(SERVER_INTERFACE_URL, request_data, callback);
+			$.getJSON(agendapp.model.SERVER_INTERFACE_URL, request_data, callback);
 		}
 		
 		/**
@@ -129,7 +151,7 @@ agendapp.model = {
 			request_data += "query=delete";
 			request_data += "&event="+JSON.stringify(this);
 			console.log(request_data);
-			$.getJSON(SERVER_INTERFACE_URL, request_data, callback);
+			$.getJSON(agendapp.model.SERVER_INTERFACE_URL, request_data, callback);
 		}
 
 		/**
@@ -172,7 +194,7 @@ agendapp.model = {
 		var result = [];
 		var request_data = '';
 		request_data += "query=readAll";
-		$.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
+		$.getJSON(agendapp.model.SERVER_INTERFACE_URL, request_data, function (result) {
 			if (result.error == 'KO') {
 				console.log('An error occured while deleting event in server. Details : '.result.message);
 			}

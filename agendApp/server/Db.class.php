@@ -1,7 +1,6 @@
 <?php
 	class Db {
 		private static $servername = "127.0.0.1";
-		private static $port = "80";
 		private static $username = "usertest";
 		private static $password = "passwordtest";
 		private static $dbname = "AgendApp";
@@ -9,7 +8,7 @@
 
 		private static function connect () {
 			try {
-				Db::$connection = new PDO('mysql:host='.self::$servername.';port='.$port.';dbname='.self::$dbname, self::$username, self::$password);
+				Db::$connection = new PDO('mysql:host='.self::$servername.';port=8889;dbname='.self::$dbname, self::$username, self::$password);
 				Db::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 			catch (PDOException $e) {

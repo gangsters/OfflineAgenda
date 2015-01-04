@@ -4,6 +4,7 @@
 
 	// The JSON standard MIME header.
 	header('Content-type: application/json');
+
 	// Request from javascript client.
 	if (empty($_GET)) {
 		respond_with_error("Not request using GET was made.");
@@ -40,7 +41,7 @@
 		// save it
 		$event->save();
 		// respond
-		respond_success();
+		respond_success($event);
 	}
 
 	/**
@@ -130,11 +131,12 @@
 	 * Send back to client the success code indicating his
 	 * request was well executed.
 	 */
-	function respond_success(){
+	function respond_success($event){
 		$response = array();
 		$response['error'] = "OK";
-		$response['id'] = $event->id;
+		$response['id'] = $event->id; //TODO: Un truc plus propre que ça :s
 		$json = json_encode($response);
+		file_put_contents("notify.txt", "true");
 		echo $json;
 	}
 
@@ -148,6 +150,7 @@
 		$response['error'] = "OK";
 		$response['message'] = $message;
 		$json = json_encode($response);
+		file_put_contents("notify.txt", "true");
 		echo $json;
 	}
 ?>
