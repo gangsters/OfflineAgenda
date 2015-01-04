@@ -45,21 +45,44 @@ var agendapp = {
 		},
 
 		init: 	function() {
-			// Opening local HTML5 indexed database
-			agendapp.model.localDB.open();
-
 			var SERVER_INTERFACE_URL = "http://localhost/agendapp/server/eventInterface.php";
 			var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
+            
+            /*** handling Offline/online mode ***/
+            IS_ONLINE=false; // global variable
+            function updateOnlineStatus() {
+                IS_ONLINE = navigator.onLine;
+                if (IS_ONLINE){
+                    console.log('Switched to online mode.');
+                }
+                else{
+                    console.log('Switched to offline mode.');
+                }
+            }
+
+            updateOnlineStatus("load");
+            window.addEventListener("online", function () {
+                      updateOnlineStatus() ;
+            }, false);
+            window.addEventListener("offline", function () {
+                        updateOnlineStatus();
+            }, false);
+
+			/*** Opening local HTML5 indexed database ***/
+			agendapp.model.localDB.open();
+
 			
 			/**
 			 * Creates a new calendar event instance.
 			 * @constructor
 			 */
-			function CalendarEvent(title, start, end) {
+			function CalendarEvent(title, beginDate, endDate) {
 				this.title = title;
-				this.start = start;
-				this.end = end;
+				this.beginDate = beginDate;
+				this.endDate = endDate;
 				this.timeStamp = new Date().getTime();
+                this.isDirty = true;
+                this.toDelete = false;
 			}
 
 			/**
@@ -79,6 +102,7 @@ var agendapp = {
 			 * Save the current CalendarEvent to server database
 			 * If the returned JSON is incorrect the callback will not be executed. SILENTLY.
 			 * This is due to the conversion to JSON function ...
+             * @return true if the transaction is successful ; false otherwise.
 			 */
 			CalendarEvent.prototype.save_to_server = function() {
 				var request_data = '';
@@ -88,12 +112,15 @@ var agendapp = {
 				$.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
 					if (result.error == 'KO') {
 						console.log('An error occured while saving event in server. Details : '.result.message);
+                        return false;
 					}
 					else if(result.error == 'OK'){
 						console.log('Event saved to server.');
+                        return true;
 					}
 					else{
 						console.log('Unexpected error with server. '.result);
+                        return false;
 					}
 				});
 			}
@@ -117,6 +144,7 @@ var agendapp = {
 			
 			/**
 			 * Delete the current CalendarEvent of server database.
+             * @return true if success ; false otherwise.
 			 */
 			CalendarEvent.prototype.delete_of_server = function () {
 				var request_data = '';
@@ -125,12 +153,15 @@ var agendapp = {
 				$.getJSON(SERVER_INTERFACE_URL, request_data, function (result) {
 					if (result.error == 'KO') {
 						console.log('An error occured while deleting event in server. Details : '.result.message);
+                        return false;
 					}
 					else if(result.error == 'OK'){
 						console.log('Event deleted of server.');
+                        return true;
 					}
 					else{
 						console.log('Unexpected error with server. '.result);
+                        return false;
 					}
 				});
 			}
@@ -151,6 +182,17 @@ var agendapp = {
 					request.onerror = agendapp.model.localDB.onError;
 				}
 			}
+            
+            /**
+             * Check if an event is the same as the current one.
+             * @return true if same; false otherwise.
+             */
+             CalendarEvent.prototype.is_same = function(other_event) {
+                 result = this.id === other_event.id && this.title === other_event.title;
+                 result = result && this.beginDate === other_event.beginDate && this.endDate === other_event.enDate;
+                 return result
+             }
+            
 			// export to agendapp the prototype
 			agendapp.model.CalendarEvent = CalendarEvent;
 		},
@@ -158,6 +200,7 @@ var agendapp = {
 		/*** GENERALS MODEL METHODS ***/
 		/**
 		 * Get all events stored in server database.
+         * @return an array of CalendarEvent
 		 */
 		get_all_events_from_server: function() {
 			var result = [];
@@ -187,6 +230,7 @@ var agendapp = {
 
 		/**
 		 * Get all events stored in local database.
+         * @return an array of CalendarObject
 		 */
 		get_all_events_from_localdb: function(callback) {
 			fetchEvents(null, null, null, callback);
@@ -222,48 +266,184 @@ var agendapp = {
 			}
 		},
 		
-		/*** SIMPLE FUNCTIONS FOR PERSISTENCE - THIS FUNCTIONS MUST BE CALLED FROM CONTROLLER AND NO OTHER !***/
+		/*** SIMPLE FUNCTIONS FOR PERSISTENCE - CONTROLLER  MUST BE CALLED THIS FUNCTIONS AND NO OTHER !***/
 		/**
 		 * Save a CalendarEvent ; no matter whether you're online or offline.
 		 */
 		save: function(calendarevent){
-			//TODO check connectivity
-			
-			//TODO if offline, store locally with a tag
-			
-			//TODO if online, get update then store locally and remotely
+			// if online, store locally and remotely
+			if (IS_ONLINE){
+                success = calendarevent.save_to_server();
+                //very important. If save_to_server() failed, it will be sent again at next refresh.
+                calendarevent.isDirty = !success;
+                calendarevent.save_to_localdb();                
+            }
+            // if offline, store locally with a tag saying 'not synchronized'.
+            else {
+                calendarevent.isDirty = true;
+                calendarevent.save_to_localdb();
+            }
 		},
 		
 		/**
 		 * Delete a CalendarEvent ; no matter whether you're online or offline.
 		 */
 		delete: function(calendarevent) {
-			//TODO check connectivity
-			
-			//TODO if offline, delete locally with a tag
-			
-			//TODO if online, get update then delete locally and remotely
+			// if online, get update then delete locally and remotely
+			if(IS_ONLINE){
+                success = calendarevent.delete_of_server();
+                if (success) {
+                    calendarevent.delete_of_localdb();
+                }
+                // if deletion of server db was unsuccessful
+                else{
+                    calendarevent.isDirty = true;
+                    calendarevent.toDelete = true;
+                    calendarevent.save_to_localdb();
+                }
+            }
+            // if offline, tag to delete.
+            else{
+                calendarevent.isDirty = true;
+                calendarevent.toDelete = true;
+                calendarevent.save_to_localdb();
+            }
 		},
-		
+        
 		/**
-		 * Set local database and server database to the same version.
+         * Test if a calendarevent is in an array.
+         * Comparaison is based on ID.
+         * If an event doesn't have an id, it isn't take into account.
+         * @return true if array contains calendarevent ; false otherwise
+         */
+        contains: function(calendarevent, array){
+            var result = false;
+            if (isset(calendarevent.id)){
+                var length = array.length;
+                var i = 0;
+                while (!result && i<length) {
+                    if(isset(array[i].id)){
+                        result = array[i].id === calendarevent.id;
+                    }
+                    i++;
+                }
+            }
+            return result;
+        },
+            
+        /**
+         * Retrieve the index of the array where a similar calendarevent (based on id only) is.
+         * Comparaison is based on ID.
+         * If an event doesn't have an id, it isn't take into account.
+         * @return index of the similar event if there is one; -1 otherwise.
+         */
+        get_position_same_id_event: function(calendarevent, array){
+            var result = -1;
+            var found = false;
+            if (isset(calendarevent.id)){
+                var length = array.length;
+                var i = 0;
+                while (!found && i<length) {
+                    if(isset(array[i].id) && array[i].id === calendarevent.id){
+                        found = true;
+                        result = i;
+                    }   
+                    i++;
+                }
+            }
+            return result;
+        },
+        
+		/**
+		 * Set local database and server database to the same version (if connection allows it of course !).
 		 * Resolve conflicts if they are some.
-		 * If online -> online : push merged/new data.
-		 * If offline -> online : pull, merge, push.
+         * if beforeCall -> whenFunctionIsCalled : what is done by actualize().
+		 * If online -> online : pull from server. Then, push dirty data. If push succeeded, clean data locally (undirty and delete).
+		 * If offline -> online : idem as online -> online. BUT MAY NEED A VIEW REFRESH.
 		 * If offline -> offline : do nothing
 		 * This function must be called :
 		 * * when local app retrieve connectivity
 		 * * each time a modification was made by another client on server database. (publish-subscribe?)
 		 */
 		actualize: function() {
-			// TODO if online
-			// TODO get all events from server
-			// TODO get all events from local
-			// check what to push.
-			// check if the ID problem
-			// store locally
-			// push back to server if still online
-			// get IDs of pushed events to set the ID locally.
+			if(IS_ONLINE){
+                var events_server = get_all_events_from_server();
+                var events_local = get_all_events_from_localdb();//<<<<<<<<<<<<------- jeremTODO PROBLEM D'ASYNCHRONISATION !!!
+                /* merge server events -> local events */
+                var events_server_length = events_server.length;
+				for (var i = 0; i < events_server_length; i++) {
+                    var serverevent = events_server[i];
+                    // if server event is NOT in local_events : add it.
+                    if (!contains(serverevent, events_local)) {
+                        serverevent.isDirty = false;
+                        serverevent.toDelete = false;
+                        events_local.push(serverevent);
+                        serverevent.save_to_localdb();
+                        console.log('Added one new event from server.');
+                    }
+                    // if server event is in local_events => resolving
+                    else{
+                        var localevent_position = get_position_same_id_event(serverevent, events_local);
+                        var localevent = events_local[localevent_position];
+                        // events are same (ID) = someone changed something => resolve
+                        if (!localevent.is_same(serverevent)) {
+                            // local dirty (modified) => local event wins over server event // CHOICE TO PRIVILEGE LOCAL
+                            if (localevent.isDirty && !localevent.toDelete) {
+                                var success = localevent.save_to_server();
+                                if (success) {
+                                    events_local[localevent_position].isDirty = false;
+                                    events_local[localevent_position].save_to_localdb();
+                                    console.log('An event modified locally overwrited an event modified by someone else. Conflict solved.');
+                                }
+                            }
+                            // local dirty to delete (modifed locally then deleted) => delete everywhere
+                            else if (localevent.isDirty && localevent.toDelete) {
+                                var success = localevent.delete_of_server();
+                                if (success) {
+                                    events_local.slice(localevent_position, 1);
+                                    events_local[localevent_position].delete_of_localdb();
+                                    console.log('A locally modified-then-deleted event was permanently deleted.');
+                                }
+                            }
+                            // local not dirty (not modified) = server event is dirty => server event win over local event
+                            else{
+                                serverevent.isDirty = false;
+                                events_local.slice(localevent_position, 1);
+                                events_local.push(serverevent);
+                                serverevent.save_to_localdb();
+                                console.log('An event was updated by someone else.');
+                            }
+                        }
+                        // events are same = no change => do nothing
+                        else{}
+                    }
+                }// server_events is now same as local_events
+                
+                // push local dirty events -> server. Then clean them (delete or undirty).
+                var locallength = events_local.length;
+                for (var i = 0; i <locallength; i++) {
+                    // dirty events
+                    if (isset(events_local[i].isDirty) && events_local[i].isDirty) {
+                        // events to delete
+                        if (isset(events_local[i].toDelete) && events_local[i].toDelete) {
+                            success = events_local[i].delete_of_server;
+                            if (success) {
+                                events_local[i].delete_of_localdb();
+                                events_local.slice(i, 1);
+                            }
+                        }
+                        // events to create or update
+                        else{
+                            success = events_local[i].save_to_server();
+                            if (success) {
+                                events_local[i].isDirty = false;
+                                events_local[i].save_to_localdb();
+                            }
+                        }
+                    }
+                }                
+                //TODO get IDs of pushed events to set the ID locally.
+            }
 		}
 	},
 
