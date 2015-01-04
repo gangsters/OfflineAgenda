@@ -368,7 +368,7 @@ var agendapp = {
 		actualize: function() {
 			if(IS_ONLINE){
                 var events_server = get_all_events_from_server();
-                var events_local = get_all_events_from_localdb();//<<<<<<<<<<<<------- jeremTODO PROBLEM D'ASYNCHRONISATION !!!
+                var events_local = get_all_events_from_localdb();//<<<--- problem d'asynchrone. Du coup, faut résoudre ça cf discussion fb.
                 /* merge server events -> local events */
                 var events_server_length = events_server.length;
 				for (var i = 0; i < events_server_length; i++) {
@@ -441,8 +441,10 @@ var agendapp = {
                             }
                         }
                     }
-                }                
+                }
                 //TODO get IDs of pushed events to set the ID locally.
+                
+                //TODO écraser la variable globale client des events par events_local ou alors l'appeler events_local et virer la 3eme ligne de cette fonction.
             }
 		}
 	},
