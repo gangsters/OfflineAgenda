@@ -75,6 +75,7 @@
 			$query->bindParam(':begin', $this->beginDate);
 			$query->bindParam(':end', $this->endDate);
 			$query->execute();
+			// sets the ID given by database
 			$this->id = $db->lastInsertId();
 		}
 

@@ -1,8 +1,10 @@
 agendapp.model = {
-
+    events_local : [],
+    events_server : [],
+    
 	localDB: {
 		db: null,
-		open: function() {
+		open: function(callback) {
 			var version = 8;
 			console.log('Opening local database');
 			var request = indexedDB.open("agendapp", version);
@@ -21,10 +23,12 @@ agendapp.model = {
 				store.createIndex("title", "title", { unique: false });
 				store.createIndex("beginDate", "beginDate", { unique: false });
 				store.createIndex("endDate", "endDate", { unique: false });
+                callback();
 			};
 
 			request.onsuccess = function(e) {
 				console.log('Local database successfully open');
+                callback();
 				agendapp.model.localDB.db = e.target.result;
 				agendapp.view.refresh();
 			};
@@ -33,18 +37,21 @@ agendapp.model = {
 		},
 		onError: function(error) {
 			console.log(error.value);
-		},
+		},  
 	},
-
+    
+    pre_init : function() {
+        /*** Opening local HTML5 indexed database ***/
+		agendapp.model.localDB.open(agendapp.model.init);
+    },
+    
 	init: 	function() {
-		var SERVER_INTERFACE_URL = "http://localhost:8888/agendapp/server/eventInterface.php"; //TODO: Change PORT
-		var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
-        
         /*** handling Offline/online mode ***/
         IS_ONLINE=false; // global variable
         function updateOnlineStatus() {
             IS_ONLINE = navigator.onLine;
             if (IS_ONLINE){
+                //TODO acutalize here
                 console.log('Switched to online mode.');
             }
             else{
@@ -54,14 +61,13 @@ agendapp.model = {
 
         updateOnlineStatus("load");
         window.addEventListener("online", function () {
-                  updateOnlineStatus() ;
+            updateOnlineStatus() ;
         }, false);
         window.addEventListener("offline", function () {
-                    updateOnlineStatus();
+            updateOnlineStatus();
         }, false);
 
-		/*** Opening local HTML5 indexed database ***/
-		agendapp.model.localDB.open();
+
 		
 		/**
 		 * Creates a new calendar event instance.
@@ -107,7 +113,7 @@ agendapp.model = {
 		/**
 		 * Save the current CalendarEvent to local database.
 		 */
-		CalendarEvent.prototype.save_to_localdb = function(callback) { //TODO: callback pas vrmt utile
+		CalendarEvent.prototype.save_to_localdb = function(callback) {
 			var db = agendapp.model.localDB.db;
 			if(db) {
 				var trans = db.transaction(["event"], "readwrite");
@@ -116,6 +122,7 @@ agendapp.model = {
 				request.onsuccess = function(e) {
 					console.log('Event successfully saved to local database.');
 					agendapp.view.refresh(); //TODO: Use actualize()
+                    callback();
 				};
 				request.onerror = agendapp.model.localDB.onError;
 			}
@@ -144,6 +151,7 @@ agendapp.model = {
 				request.onsuccess = function(e) {
 					console.log('Event successfully deleted from local database.');
 					agendapp.view.refresh();
+                    callback();
 				};
 				request.onerror = agendapp.model.localDB.onError;
 			}
@@ -161,6 +169,7 @@ agendapp.model = {
         
 		// export to agendapp the prototype
 		agendapp.model.CalendarEvent = CalendarEvent;
+        agendapp.model.launch_actualization();
 	},
 
 	/*** GENERALS MODEL METHODS ***/
@@ -168,7 +177,7 @@ agendapp.model = {
 	 * Get all events stored in server database.
      * @return an array of CalendarEvent
 	 */
-	get_all_events_from_server: function() {
+	get_all_events_from_server: function(callback) {
 		var result = [];
 		var request_data = '';
 		request_data += "query=readAll";
@@ -181,12 +190,13 @@ agendapp.model = {
 				var calendarevents = [];
 				var arrayLength = events_obj.length;
 				for (var i = 0; i < arrayLength; i++) {
-					var newevent = new CalendarEvent(events_obj[i].title, events_obj[i].start, events_obj[i].end);
+					var newevent = new agendapp.model.CalendarEvent(events_obj[i].title, events_obj[i].start, events_obj[i].end);
 					newevent.id = events_obj[i].id;
 					calendarevents.push(newevent);
 				}
 				console.log(arrayLength+' events has been get from server.');
-				return calendarevents;
+				callback();
+                //return calendarevents;
 			}
 			else{
 				console.log('Unexpected error with server. '.result);
@@ -198,7 +208,7 @@ agendapp.model = {
 	 * Get all events stored in local database.
      * @return an array of CalendarObject
 	 */
-	get_all_events_from_localdb: function() {
+	get_all_events_from_localdb: function(callback) {
 		var events = [];
 		var db = agendapp.model.localDB.db;
 		if(db) {
@@ -210,8 +220,8 @@ agendapp.model = {
 			var keyRange = IDBKeyRange.lowerBound(0);
 			// get the cursor
 			var cursorRequest = store.openCursor(keyRange);
-
 			cursorRequest.onsuccess = function(e) {
+                console.log('local succ 2');////////////////////////////////////////////////////////////////////////////////
 				var result = e.target.result;
 				if(!!result == false) return;
 				events.push(result.value);
@@ -219,8 +229,11 @@ agendapp.model = {
 			};
 			cursorRequest.onerror = agendapp.model.localDB.onError;
 			trans.oncomplete = function(e) {
+                console.log('lcal suc 3');//////////////////////////////////////////////////////////////////////////////////
 				console.log(events);
-				return(events);
+                agendapp.model.events_local = events;
+				callback();
+                //return(events);
 			}
 		}
 	},
@@ -267,20 +280,27 @@ agendapp.model = {
             calendarevent.save_to_server(function (result) {
 				console.log(result);
 				if (result.error == 'KO') {
+                    console.log('An error occured while saving event in server. Details : '.result.message);
             		calendarevent.isDirty = true;
-	    			calendarevent.save_to_localdb();
-					console.log('An error occured while saving event in server. Details : '.result.message);
+	    			calendarevent.save_to_localdb(function() {
+                        console.log("The event who couldn't be saved remotely is dirty and saved locally.");
+                    });
+					
 				}
 				else if(result.error == 'OK'){
             		calendarevent.isDirty = false;
 					calendarevent.id = result.id;
-	    			calendarevent.save_to_localdb();
-					console.log('Event saved to server.');
+	    			calendarevent.save_to_localdb(function() {
+                        console.log('Event saved to server and locally with ID.');
+                    });
+					
 				}
 				else{
+                    console.log('Unexpected error with server. '.result);
             		calendarevent.isDirty = true;
-	    			calendarevent.save_to_localdb();
-					console.log('Unexpected error with server. '.result);
+	    			calendarevent.save_to_localdb(function(){
+                        console.log("The event who couldn't be saved remotely is dirty and saved locally.");
+                    });
 				}
 			});
         }
@@ -288,8 +308,9 @@ agendapp.model = {
             calendarevent.isDirty = true;
 	        // if offline, store locally with a tag saying 'not synchronized'.
 	        //very important. If save_to_server() failed, it will be sent again at next refresh.
-	    	calendarevent.save_to_localdb();
-			console.log('Offline: saving event locally.');
+	    	calendarevent.save_to_localdb(function(){
+			     console.log('Offline: saving event locally.');
+            });
         }
 	},
 	
@@ -337,14 +358,14 @@ agendapp.model = {
      * If an event doesn't have an id, it isn't take into account.
      * @return true if array contains calendarevent ; false otherwise
      */
-    contains: function(calendarevent, array){
+    events_local_contains: function(calendarevent){
         var result = false;
         if (isset(calendarevent.id)){
-            var length = array.length;
+            var length = agendapp.model.events_local.length;
             var i = 0;
             while (!result && i<length) {
-                if(isset(array[i].id)){
-                    result = array[i].id === calendarevent.id;
+                if(isset(agendapp.model.events_local[i].id)){
+                    result = agendapp.model.events_local[i].id === calendarevent.id;
                 }
                 i++;
             }
@@ -375,6 +396,14 @@ agendapp.model = {
         return result;
     },
     
+    callback_get_from_server_actualization: function() {
+        agendapp.model.get_all_events_from_localdb(agendapp.model.callback_get_from_localdb_actualization);
+        console.log('l396');
+    },
+    callback_get_from_localdb_actualization: function() {
+                console.log('local db got l399');
+        agendapp.model.merge_events();
+    },
 	/**
 	 * Set local database and server database to the same version (if connection allows it of course !).
 	 * Resolve conflicts if they are some.
@@ -386,86 +415,88 @@ agendapp.model = {
 	 * * when local app retrieve connectivity
 	 * * each time a modification was made by another client on server database. (publish-subscribe?)
 	 */
-	actualize: function() {
+	launch_actualization: function() {
 		if(IS_ONLINE){
-            var events_server = get_all_events_from_server();
-            var events_local = get_all_events_from_localdb();//<<<--- problem d'asynchrone. Du coup, faut résoudre ça cf discussion fb.
-            /* merge server events -> local events */
-            var events_server_length = events_server.length;
-			for (var i = 0; i < events_server_length; i++) {
-                var serverevent = events_server[i];
-                // if server event is NOT in local_events : add it.
-                if (!contains(serverevent, events_local)) {
-                    serverevent.isDirty = false;
-                    serverevent.toDelete = false;
-                    events_local.push(serverevent);
-                    serverevent.save_to_localdb();
+            var events_server = agendapp.model.get_all_events_from_server(agendapp.model.callback_get_from_server_actualization);
+        }
+    },
+    
+    /* merge server events -> local events */
+    merge_events: function(){
+        var events_server_length = agendapp.model.events_server.length;
+        for (var i = 0; i < events_server_length; i++) {
+            var serverevent = agendapp.model.events_server[i];
+            // if server event is NOT in events_local : add it.
+            if (!events_local_contains(serverevent)) {
+                serverevent.isDirty = false;
+                serverevent.toDelete = false;
+                agendapp.model.events_local.push(serverevent);
+                serverevent.save_to_localdb(function(){
                     console.log('Added one new event from server.');
-                }
-                // if server event is in local_events => resolving
-                else{
-                    var localevent_position = get_position_same_id_event(serverevent, events_local);
-                    var localevent = events_local[localevent_position];
-                    // events are same (ID) = someone changed something => resolve
-                    if (!localevent.is_same(serverevent)) {
-                        // local dirty (modified) => local event wins over server event // CHOICE TO PRIVILEGE LOCAL
-                        if (localevent.isDirty && !localevent.toDelete) {
-                            var success = localevent.save_to_server();
-                            if (success) {
-                                events_local[localevent_position].isDirty = false;
-                                events_local[localevent_position].save_to_localdb();
+                });
+            }
+            // if server event is in events_local => resolving
+            else{
+                var localevent_position = agendapp.model.get_position_same_id_event(serverevent, agendapp.model.events_local);
+                var localevent = agendapp.model.events_local[localevent_position];
+                // events are same (ID) = someone changed something => resolve
+                if (!localevent.is_same(serverevent)) {
+                    // local dirty (modified) => local event wins over server event // CHOICE TO PRIVILEGE LOCAL
+                    if (localevent.isDirty && !localevent.toDelete) {
+                        localevent.save_to_server(function(){
+                            agendapp.model.events_local[localevent_position].isDirty = false;
+                            agendapp.model.events_local[localevent_position].save_to_localdb(function(){
                                 console.log('An event modified locally overwrited an event modified by someone else. Conflict solved.');
-                            }
-                        }
-                        // local dirty to delete (modifed locally then deleted) => delete everywhere
-                        else if (localevent.isDirty && localevent.toDelete) {
-                            var success = localevent.delete_of_server();
-                            if (success) {
-                                events_local.slice(localevent_position, 1);
-                                events_local[localevent_position].delete_of_localdb();
+                            });
+                        });
+                    }
+                    // local dirty to delete (modifed locally then deleted) => delete everywhere
+                    else if (localevent.isDirty && localevent.toDelete) {
+                        localevent.delete_of_server(function(){
+                            agendapp.model.events_local.slice(localevent_position, 1);
+                            agendapp.model.events_local[localevent_position].delete_of_localdb(function(){
                                 console.log('A locally modified-then-deleted event was permanently deleted.');
-                            }
-                        }
-                        // local not dirty (not modified) = server event is dirty => server event win over local event
-                        else{
-                            serverevent.isDirty = false;
-                            events_local.slice(localevent_position, 1);
-                            events_local.push(serverevent);
-                            serverevent.save_to_localdb();
-                            console.log('An event was updated by someone else.');
-                        }
+                            });
+                        });
                     }
-                    // events are same = no change => do nothing
-                    else{}
-                }
-            }// server_events is now same as local_events
-            
-            // push local dirty events -> server. Then clean them (delete or undirty).
-            var locallength = events_local.length;
-            for (var i = 0; i <locallength; i++) {
-                // dirty events
-                if (isset(events_local[i].isDirty) && events_local[i].isDirty) {
-                    // events to delete
-                    if (isset(events_local[i].toDelete) && events_local[i].toDelete) {
-                        success = events_local[i].delete_of_server();
-                        if (success) {
-                            events_local[i].delete_of_localdb();
-                            events_local.slice(i, 1);
-                        }
-                    }
-                    // events to create or update
+                    // local not dirty (not modified) = server event is dirty => server event win over local event
                     else{
-                        success = events_local[i].save_to_server();
-                        if (success) {
-                            events_local[i].isDirty = false;
-                            events_local[i].save_to_localdb();
-                        }
+                        serverevent.isDirty = false;
+                        agendapp.model.events_local.slice(localevent_position, 1);
+                        agendapp.model.events_local.push(serverevent);
+                        serverevent.save_to_localdb(function(){
+                            console.log('An event was updated by someone else.');
+                        });
                     }
+                }
+                // events are same = no change => do nothing
+                else{}
+            }
+        }// events_server is now same as events_local
+        // push local dirty events -> server. Then clean them (delete or undirty).
+        var locallength = agendapp.model.events_local.length;
+        for (var i = 0; i <locallength; i++) {
+            // dirty events
+            if (isset(agendapp.model.events_local[i].isDirty) && agendapp.model.events_local[i].isDirty) {
+                // events to delete
+                if (isset(agendapp.model.events_local[i].toDelete) && agendapp.model.events_local[i].toDelete) {
+                    agendapp.model.events_local[i].delete_of_server(function(){
+                        agendapp.model.events_local[i].delete_of_localdb(function(){
+                            agendapp.model.events_local.slice(i, 1);
+                            console.log('An event was permanently deleted.');
+                        });
+                    });
+                }
+                // events to create or update
+                else{
+                   agendapp.model.events_local[i].save_to_server(function(){
+                       agendapp.model.events_local[i].isDirty = false;
+                       agendapp.model.events_local[i].save_to_localdb(function(){
+                           console.log('An created or updated event was pushed to server.');
+                       });
+                   });
                 }
             }
-            //TODO get IDs of pushed events to set the ID locally.
-            
-            //TODO écraser la variable globale client des events par events_local ou alors l'appeler events_local et virer la 3eme ligne de cette fonction.
         }
-	}
+    }
 }
