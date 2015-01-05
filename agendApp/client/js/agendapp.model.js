@@ -7,7 +7,7 @@ agendapp.model = {
 	localDB: {
 		db: null,
 		open: function(callback) {
-			var version = 8;
+			var version = 10;
 			console.log('Opening local database');
 			var request = indexedDB.open("agendapp", version);
 
@@ -43,12 +43,14 @@ agendapp.model = {
 	},
 
 	onServerEvent: function(event) {
+		// security test
 		if (event.origin != SERVER_ADDRESS) {
 			console.log(event.origin);
 		    return;
 		}
 		else if(event.data == "out-of-date") { 
-			// actualize(); //TODO décommenter
+			agendapp.model.launch_actualization();
+			agendapp.view.refresh();
 			console.log(SERVER_EVENT_SOURCE_URL + " : " + event.data);
 		} else if(event.data == "up-to-date") {
 			console.log(SERVER_EVENT_SOURCE_URL + " : " + event.data);
@@ -62,28 +64,23 @@ agendapp.model = {
 		agendapp.model.localDB.open(agendapp.model.init);
     },
     
-	init: 	function() {
-        // global variables
-        IS_ONLINE=false;
-        /*** handling Offline/online mode ***/
-        function updateOnlineStatus() {
-            IS_ONLINE = navigator.onLine;
-            if (IS_ONLINE){
-                //TODO acutalize here
-                console.log('Switched to online mode.');
-            }
-            else{
-                console.log('Switched to offline mode.');
-            }
+    updateOnlineStatus: function() {
+    	IS_ONLINE = navigator.onLine;
+        if (IS_ONLINE){
+            console.log('Switched to online mode.');
+			agendapp.model.launch_actualization();
         }
+        else{
+            console.log('Switched to offline mode.');
+        }
+    },
 
-        updateOnlineStatus("load");
-        window.addEventListener("online", function () {
-            updateOnlineStatus() ;
-        }, false);
-        window.addEventListener("offline", function () {
-            updateOnlineStatus();
-        }, false);
+	init: 	function() {
+        /*** Handling Offline/online mode ***/
+        IS_ONLINE=false;
+        agendapp.model.updateOnlineStatus();
+        window.addEventListener("online", agendapp.model.updateOnlineStatus, false);
+        window.addEventListener("offline", agendapp.model.updateOnlineStatus, false);
 
 		/*** Subscribe to server-side events ***/
 		var source = new EventSource(SERVER_EVENT_SOURCE_URL);
@@ -127,7 +124,7 @@ agendapp.model = {
 			var request_data = '';
 			request_data += "query=save";
 			request_data += "&event="+JSON.stringify(this);
-			console.log('saving to server request : '+request_data);
+			console.log('Saving to server request : '+request_data);
 			$.getJSON(SERVER_INTERFACE_URL, request_data, callback);
 		}
 		
@@ -140,10 +137,11 @@ agendapp.model = {
 				var trans = db.transaction(["event"], "readwrite");
 				var store = trans.objectStore("event");
 				var request = store.put(this);
+				var that = this;
 				request.onsuccess = function(e) {
-					console.log('Event '+this.title+ 'successfully saved to local database.');
+					console.log('Event ' + that.title + ' successfully saved to local database.');
 					agendapp.view.refresh(); //TODO: Use actualize()
-                    callback();
+                    if(callback) callback();
 				};
 				request.onerror = agendapp.model.localDB.onError;
 			}
@@ -173,7 +171,7 @@ agendapp.model = {
 				request.onsuccess = function(e) {
 					console.log('Event successfully deleted from local database.');
 					agendapp.view.refresh();
-                    callback();
+                    if(callback) callback();
 				};
 				request.onerror = agendapp.model.localDB.onError;
 			}
@@ -234,6 +232,8 @@ agendapp.model = {
 	get_all_events_from_localdb: function(callback) {
 		var db = agendapp.model.localDB.db;
 		if(db) {
+			// reset local events list
+            agendapp.model.events_local = [];
 			// start transaction with the event table (also called object store)
 			var trans = db.transaction(["event"], "readwrite");
 			// get the object store
@@ -245,15 +245,13 @@ agendapp.model = {
 			cursorRequest.onsuccess = function(e) {
 				var result = e.target.result;
 				if(result == null) return;
-                agendapp.model.events_local = [];
-				agendapp.model.events_local.push(result.value);
-                console.log(result.value.length+' events got from local database.');
+				var calendarevent = new agendapp.model.CalendarEvent(result.title, result.beginDate, result.endDate);
+				agendapp.model.events_local.push(calendarevent);
 				result.continue();
 			};
 			cursorRequest.onerror = agendapp.model.localDB.onError;
 			trans.oncomplete = function(e) {
-                //agendapp.model.events_local = e; // ? already done in onsuccess function
-                console.log(' events_local at end of get from localdb :');
+                console.log('events_local at the end of get_from_localdb method :');
                 console.log(agendapp.model.events_local);
                 callback();
 			}
@@ -279,9 +277,12 @@ agendapp.model = {
 			cursorRequest.onsuccess = function(e) {
 				var result = e.target.result;
 				if(!!result == false) return;
-				result.value.start = result.value.beginDate; // Quickly convert our CalendarEvent to the fullCalendar ones
-				result.value.end = result.value.endDate; // Quickly convert our CalendarEvent to the fullCalendar ones
-				events.push(result.value);
+				if(!result.value.toDelete) {
+					// quickly convert our CalendarEvent to the fullCalendar ones
+					result.value.start = result.value.beginDate;
+					result.value.end = result.value.endDate;
+					events.push(result.value);
+				}
 				result.continue();
 			};
 			cursorRequest.onerror = agendapp.model.localDB.onError;
@@ -471,6 +472,7 @@ agendapp.model = {
                 var localevent = agendapp.model.events_local[localevent_position];
                 console.log('HERE IT WILL FAIL BECAUSE LOCAL_EVENT IS NOT A CALENDAREVENT.');
                 console.log(localevent);
+                console.log(serverevent);
                 // events are same (ID) = someone changed something => resolve
                 if (!localevent.is_same(serverevent)) {
                     console.log('in if');
