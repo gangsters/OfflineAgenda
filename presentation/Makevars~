@@ -1,7 +1,0 @@
-NOM_FICHIER=CASI_Gangsters_OfflineAgenda
-
-# Récupération du chemin de la classe picINSA pour les documents LaTeX
-CLSPATH="$(shell pwd)/cls/"
-
-# Chemin du package beamerthemeWestpic.sty
-THEMEPATH="$(shell pwd)/cls/theme/"
