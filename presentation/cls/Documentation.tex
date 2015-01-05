@@ -1,0 +1,55 @@
+\documentclass[asi,compacte,brouillon]{picINSA}
+
+\version{1.00}
+\referenceVersion{Documentation}
+\title{Documentation package INSA}
+\author{Pierre Sassoulas}
+
+\begin{document}
+\maketitle{}
+\tableofcontents{}
+\chapter*{Introduction}
+
+Ce document permet d'utiliser plus facilement le package picINSA.cls. Il détaillera d'abord les options proposées, puis les différents environnements au niveau de la page de service et du document complet.
+
+\chapter{Options possibles}
+
+\section{Département}
+
+Il peut être \textbf{asi} ou \textbf{mrie}. Cela change la présentation général du document et le contenu de la commande \verb+\departement{}+
+
+\section{Brouillon}
+
+Il peut être utile de signaler qu'une version est un brouillon et pas la version définitive. Pour cela on utilise l'option \textbf{brouillon} qui ajoute une watermark sur chaque page.
+
+\section{Compacte}
+
+Par défaut les document sont formaté de manière à mieux présenter quand il sont imprimé. Les chapitres commencent toujours sur la page de droite, la page de service également\dots{}
+Ce n'est pas l'idéal si vous comptez seulement lire le fichier sur un ordinateur en .pdf.
+
+L'option \textbf{compacte} supprime ses pages blanches.
+
+ \section{Options régissant le bas de page}
+\subsection{Page, Version}
+
+Par défaut on affiche le numéro de page et la version du document. Pour ne pas les afficher, vous pouvez utiliser les options \textbf{sansPage} et \textbf{sansVersion}.
+
+Le numéro de version est initialisé avec la commande \verb+\version{numero_version}+
+
+\subsection{Numero, Date, Nom}
+
+Dans le cas ou votre document est numéroté, daté ou nommée, vous pouvez utilisez une option parmis \textbf{numero}, \textbf{date} et \textbf{nom}. Par défaut, cela va supprimer l'affichage de la version. En utilisant \textbf{sansPage} vous pouvez afficher la version en plus de votre première option, ou simplement votre première option si vous utilisez \textbf{sansVersion}.
+
+Les options sont :
+\begin{itemize}
+\item \textbf{numero} qui est initialisé avec la commande \verb+\numero{numero}+
+\item \textbf{date} qui est initialisé avec la commande \verb+\dateDocument{2013-03-28 (ou \today{})}+
+\item \textbf{nom} qui est initialisé avec la commande \verb+\nom{nom_document}+
+\end{itemize}
+
+
+\chapter{Environnements de la page de service}
+
+\chapter{Environnements à l'intérieur des documents}
+
+\end{document}

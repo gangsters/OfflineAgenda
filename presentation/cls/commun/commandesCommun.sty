@@ -1,0 +1,40 @@
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{commun/commandesCommun}[2008/09/11 package commandes Communes]
+
+\RequirePackage{array}
+\RequirePackage{colortbl}
+\RequirePackage{ifmtarg}
+\RequirePackage[francais]{babel}
+
+\newlength{\largeurCartouche}
+\newcommand{\includegraphicsAvecCartouche}[5]
+{\setlength{\largeurCartouche}{#1}
+  {\centering \footnotesize
+  \begin{tabular}[h]{|@{}p{0.2\largeurCartouche}@{}|@{}p{0.1\largeurCartouche}@{}@{}>{\centering}p{0.4\largeurCartouche}@{}@{}p{0.1\largeurCartouche}@{}|@{}p{0.2\largeurCartouche}@{}|}
+    \hline
+    \multicolumn{5}{|@{}c@{}|}{\includegraphics[width=\largeurCartouche]{#2}}\\
+    \hline    \rowcolor[gray]{.8}[0pt][0pt]
+    N\OE UD: #3 & TITRE: & #4 &  & N\degres{}: #5\\
+    \hline
+  \end{tabular}}
+}
+
+\makeatletter
+\newcommand{\includePDF}[3]
+{
+\begin{center}
+	\includegraphics[height=#2\textheight]{#1}
+\end{center}
+\@ifmtarg{#3}{\newpage}{\includepdf[scale=#3, pages=2-last,pagecommand={\thispagestyle{fancy}}]{#1}}
+}
+
+\newcommand{\includePDFPaysage}[3]
+{
+\begin{center}
+	\includegraphics[width=#2\textwidth]{#1}
+\end{center}
+\@ifmtarg{#3}{\newpage}{\includepdf[scale=#3, pages=2-last,pagecommand={\thispagestyle{fancy}}]{#1}}
+}
+\makeatother
+
+\endinput

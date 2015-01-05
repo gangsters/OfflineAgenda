@@ -1,0 +1,37 @@
+
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{asi/vocabulaireASI}
+
+%\RequirePackage{soul}
+
+\newif\if@debug \@debugfalse
+
+\DeclareOption{debug}{\@debugtrue}
+
+\ProcessOptions
+
+%\sethlcolor{green}
+%Vocabulaire lié aux entités
+\newcommand{\departementASI}{\vocabulaireDebug{Département ASI}}
+ \newcommand{\directionASI}{\vocabulaireDebug{Direction du \departementASI{}}}
+ \newcommand{\mailDep}{\vocabulaireDebug{asi@insa-rouen.fr}}
+ \newcommand{\siteDep}{\vocabulaireDebug{http://asi.insa-rouen.fr}}
+ \newcommand{\unite}{\vocabulaireDebug{Unité P3}}
+ %Vocabulaire lié aux documents
+\newcommand{\dgqDeux}{\vocabulaireDebug{Réaliser les PIC}}
+ \newcommand{\dgqDeuxCourt}{\vocabulaireDebug{DGQ2}}
+ \newcommand{\dgqTrois}{\vocabulaireDebug{Manager la Qualité}}
+ \newcommand{\dgqTroisCourt}{\vocabulaireDebug{DGQ3}}
+ \newcommand{\dgqUn}{\vocabulaireDebug{Rechercher, choisir et contractualiser les PIC}}
+ \newcommand{\dgqUnCourt}{\vocabulaireDebug{DGQ1}}
+ \newcommand{\referenceDGQAvecVersion}[2]{\vocabulaireDebug{ASI-DGQ-DGQ#1V#2}}
+ \newcommand{\referenceDGQSansVersion}[1]{\vocabulaireDebug{ASI-DGQ-DGQ#1}}
+ \newcommand{\referenceMQAvecVersion}[1]{\vocabulaireDebug{ASI-MQ-MQASIV#1}}
+ \newcommand{\referenceMQSansVersion}{\vocabulaireDebug{ASI-MQ-MQASI}}
+ %Vocabulaire lié à la qualité
+\newcommand{\chefPIC}{\vocabulaireDebug{Chef PIC}}
+ \newcommand{\chefsPIC}{\vocabulaireDebug{Chefs PIC}}
+ \newcommand{\mgpi}{\vocabulaireDebug{Maîtrise des Grands Projets Informatiques}}
+ \newcommand{\mgpiCourt}{\vocabulaireDebug{MGPI}}
+ 
+\endinput
