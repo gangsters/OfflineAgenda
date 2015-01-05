@@ -1,5 +1,7 @@
-var SERVER_INTERFACE_URL = "http://localhost/agendapp/server/eventInterface.php"; //TODO: Change PORT
+var SERVER_INTERFACE_URL = "http://localhost/agendapp/server/eventInterface.php";
 var RELATIVE_SERVER_INTERFACE_URL = "../server/eventInterface.php";
+var	SERVER_ADDRESS = "http://localhost";
+var	SERVER_EVENT_SOURCE_URL = "http://localhost/agendapp/server/eventSource.php";
 
 var agendapp = {
 	model: null, // See agendapp.model.js
