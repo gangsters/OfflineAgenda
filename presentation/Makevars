@@ -1,0 +1,7 @@
+NOM_FICHIER=gangsters.10B.prez
+
+# Récupération du chemin de la classe picINSA pour les documents LaTeX
+CLSPATH="$(shell pwd)/cls/"
+
+# Chemin du package beamerthemeWestpic.sty
+THEMEPATH="$(shell pwd)/cls/theme/"

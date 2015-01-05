@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vocabulaires>
+  <categorie nom="Vocabulaire lié à l'INSA">
+
+    <vocabulaire>
+      <commande-latex>adresseInsa</commande-latex>
+      <rendu-latex>Avenue de l'Université - BP 8 - 76801 SAINT ETIENNE DU ROUVRAY</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>asi</commande-latex>
+      <rendu-latex>Architecture des Systèmes d'Information</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>asiCourt</commande-latex>
+      <rendu-latex>ASI</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>cfi</commande-latex>
+      <rendu-latex>Chimie Fine et Ingénierie</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>cfiCourt</commande-latex>
+      <rendu-latex>CFI</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>creditsECTS</commande-latex>
+      <rendu-latex>crédits \ectsCourt{}</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>CreditECTS</commande-latex>
+      <rendu-latex>Crédit \ectsCourt{}</rendu-latex>
+    </vocabulaire>	  
+    <vocabulaire>
+      <commande-latex>cti</commande-latex>
+      <rendu-latex>Commission des Titres d'Ingénieur</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ctiCourt</commande-latex>
+      <rendu-latex>CTI</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>departementCFI</commande-latex>
+      <rendu-latex>Département CFI</rendu-latex>
+    </vocabulaire> 	
+    <vocabulaire>
+      <commande-latex>directeurINSARouen</commande-latex>
+      <rendu-latex>J-L. BILLOET</rendu-latex>
+    </vocabulaire>	
+    <vocabulaire>
+      <commande-latex>directionCFI</commande-latex>
+      <rendu-latex>Direction du \departementCFI{}</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>directionQualite</commande-latex>
+      <rendu-latex>Direction Qualité</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ecao</commande-latex>
+      <rendu-latex>Élément Constitutif d'Approfondissement ou d'Ouverture</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ecaoCourt</commande-latex>
+      <rendu-latex>ECAO</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ects</commande-latex>
+      <rendu-latex>European Credit Transfer and Accumulation System</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ectsCourt</commande-latex>
+      <rendu-latex>ECTS</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>eleveIngenieur</commande-latex>
+      <rendu-latex>élève-ingénieur</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>EleveIngenieur</commande-latex>
+      <rendu-latex>\'Elève-ingénieur</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>elevesIngenieurs</commande-latex>
+      <rendu-latex>élèves-ingénieurs</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ElevesIngenieurs</commande-latex>
+      <rendu-latex>\'Elèves-ingénieurs</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ep</commande-latex>
+      <rendu-latex>Energétique et Propulsion</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>epCourt</commande-latex>
+      <rendu-latex>EP</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>Etudiant</commande-latex>
+      <rendu-latex>\'Elève-ingénieur</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>etudiant</commande-latex>
+      <rendu-latex>élève-ingénieur</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>Etudiants</commande-latex>
+      <rendu-latex>\'Elèves-ingénieurs</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>etudiants</commande-latex>
+      <rendu-latex>élèves-ingénieurs</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>gc</commande-latex>
+      <rendu-latex>Génie Civil et Constructions Durables</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>gcCourt</commande-latex>
+      <rendu-latex>GCCD</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>gm</commande-latex>
+      <rendu-latex>Génie Mathématiques</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>gmCourt</commande-latex>
+      <rendu-latex>GM</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>insa</commande-latex>
+      <rendu-latex>Institut National des Sciences Appliquées</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>insaCourt</commande-latex>
+      <rendu-latex>INSA</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>insaRouen</commande-latex>
+      <rendu-latex>\insaCourt{} de Rouen</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>meca</commande-latex>
+      <rendu-latex>Mécanique</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mecaCourt</commande-latex>
+      <rendu-latex>MECA</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mpecao</commande-latex>
+      <rendu-latex>Maintenance Par \ecao{}</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mpecaoCourt</commande-latex>
+      <rendu-latex>MPECAO</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mrie</commande-latex>
+      <rendu-latex>Maîtrise des Risques Industriels et Environnementaux</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mrieCourt</commande-latex>
+      <rendu-latex>MRIE</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>msa</commande-latex>
+      <rendu-latex>Mont Saint-Aignan</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>msaCourt</commande-latex>
+      <rendu-latex>MSA</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ppri</commande-latex>
+      <rendu-latex>Projets Pluridisciplinaires de Recherche et d'Ingénierie</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ppriCourt</commande-latex>
+      <rendu-latex>PPRI</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>pteci</commande-latex>
+      <rendu-latex>Psychologie du Travail en \'Equipe et Communication Interpersonnelle</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>pteciCourt</commande-latex>
+      <rendu-latex>PTECI</rendu-latex>
+    </vocabulaire>		
+    <vocabulaire>
+      <commande-latex>ser</commande-latex>
+      <rendu-latex>Saint-Etienne du Rouvray</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>serCourt</commande-latex>
+      <rendu-latex>SER</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>sri</commande-latex>
+      <rendu-latex>Direction des Relations Industrielles et des Partenariats</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>sriCourt</commande-latex>
+      <rendu-latex>DRIP</rendu-latex>
+    </vocabulaire>		
+    <vocabulaire>
+      <commande-latex>stage</commande-latex>
+      <rendu-latex>stage de formation professionnelle</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>stagiaire</commande-latex>
+      <rendu-latex>\etudiant{} stagiaire</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>stagiaires</commande-latex>
+      <rendu-latex>\etudiants{} stagiaires</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>stpi</commande-latex>
+      <rendu-latex>Sciences et Technologies Pour l'Ingénieur</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>stpiCourt</commande-latex>
+      <rendu-latex>STPI</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ue</commande-latex>
+      <rendu-latex>Unité d'Enseignement</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ueCourt</commande-latex>
+      <rendu-latex>UE</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>ues</commande-latex>
+      <rendu-latex>Unités d'Enseignement</rendu-latex>
+    </vocabulaire>
+
+
+</categorie>
+    <categorie nom="Vocabulaire lié aux PICs">
+      
+      <vocabulaire>
+	<commande-latex>cgp</commande-latex>
+	<rendu-latex>Comité de Gestion de Projet</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>cgpCourt</commande-latex>
+	<rendu-latex>CGP</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>client</commande-latex>
+	<rendu-latex>client</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>Client</commande-latex>
+	<rendu-latex>Client</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>clients</commande-latex>
+	<rendu-latex>clients</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex nbparam="2">confere</commande-latex>
+	<rendu-latex>(cf. #1 #2)</rendu-latex>
+	<explication>permet de créer un confere avec le paramètre #1 le type de document (En mettant la première lettre en majuscule) et le paramètre #2 son numéro.</explication>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dgp</commande-latex>
+	<rendu-latex>Dossier de Gestion de Projet</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dgpCourt</commande-latex>
+	<rendu-latex>DGP</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dgps</commande-latex>
+	<rendu-latex>Dossiers de Gestion de Projet</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>directionSI</commande-latex>
+	<rendu-latex>Direction des Systèmes d'Information</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>directionSICourt</commande-latex>
+	<rendu-latex>DSI</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dgq</commande-latex>
+	<rendu-latex>Disposition Générale de Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dgqCourt</commande-latex>
+	<rendu-latex>DGQ</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dgqs</commande-latex>
+	<rendu-latex>Dispositions Générales de Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dse</commande-latex>
+	<rendu-latex>Dossier de Spécifications Externes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dseCourt</commande-latex>
+	<rendu-latex>DSE</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dses</commande-latex>
+	<rendu-latex>Dossiers de Spécifications Externes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dsi</commande-latex>
+	<rendu-latex>Dossier de Spécifications Internes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dsiCourt</commande-latex>
+	<rendu-latex>DSI</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dsis</commande-latex>
+	<rendu-latex>Dossiers de Spécifications Internes</rendu-latex>
+      </vocabulaire>		
+      <vocabulaire>
+	<commande-latex>dsq</commande-latex>
+	<rendu-latex>Dossier de Suivi de la Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dsqCourt</commande-latex>
+	<rendu-latex>DSQ</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dsqs</commande-latex>
+	<rendu-latex>Dossiers de Suivi de la Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dti</commande-latex>
+	<rendu-latex>Dossier de Tests d'Intégration</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dtiCourt</commande-latex>
+	<rendu-latex>DTI</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dtu</commande-latex>
+	<rendu-latex>Dossier de Tests Unitaires</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dtuCourt</commande-latex>
+	<rendu-latex>DTU</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dtv</commande-latex>
+	<rendu-latex>Dossier de Tests de Validation</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>dtvCourt</commande-latex>
+	<rendu-latex>DTV</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ec</commande-latex>
+	<rendu-latex>Élément Constitutif</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ecCourt</commande-latex>
+	<rendu-latex>EC</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ecs</commande-latex>
+	<rendu-latex>Éléments Constitutifs</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>fft</commande-latex>
+	<rendu-latex>Fiche de Fait Technique</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>fftCourt</commande-latex>
+	<rendu-latex>FFT</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ffts</commande-latex>
+	<rendu-latex>Fiches de Fait Technique</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ficheCompetence</commande-latex>
+	<rendu-latex>fiche de compétences</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>FicheCompetence</commande-latex>
+	<rendu-latex>Fiche de compétences</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>fichesCompetence</commande-latex>
+	<rendu-latex>fiches de compétences</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>FichesCompetence</commande-latex>
+	<rendu-latex>Fiches de compétences</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ficheRole</commande-latex>
+	<rendu-latex>fiche de rôle</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>FicheRole</commande-latex>
+	<rendu-latex>Fiche de rôle</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>fichesRole</commande-latex>
+	<rendu-latex>fiches de rôle</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>FichesRole</commande-latex>
+	<rendu-latex>Fiches de rôle</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>idefZero</commande-latex>
+	<rendu-latex>IDEF0</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>igq</commande-latex>
+	<rendu-latex>Instruction Générale Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>igqCourt</commande-latex>
+	<rendu-latex>IGQ</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>isoDixNeufMilleOnze</commande-latex>
+	<rendu-latex>ISO 19011:2002</rendu-latex>
+      </vocabulaire>		
+      <vocabulaire>
+	<commande-latex>isoNeufMille</commande-latex>
+	<rendu-latex>ISO 9000:2005</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>isoNeufMilleQuatre</commande-latex>
+	<rendu-latex>ISO 9004:2000</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>isoNeufMilleUn</commande-latex>
+	<rendu-latex>ISO 9001:2008</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>isoQuatorzeMilleUn</commande-latex>
+	<rendu-latex>ISO 14001:2004</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>manuelQualite</commande-latex>
+	<rendu-latex>Manuel Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>manuelQualiteCourt</commande-latex>
+	<rendu-latex>MQ</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>missionQualite</commande-latex>
+	<rendu-latex>Mission Qualité</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>nonQualite</commande-latex>
+	<rendu-latex>Non-Qualité</rendu-latex>
+      </vocabulaire>			
+      <vocabulaire>
+	<commande-latex>nonQualites</commande-latex>
+	<rendu-latex>Non-Qualités</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ordreCorrection</commande-latex>
+	<rendu-latex>Ordre de Correction</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>ocCourt</commande-latex>
+        <rendu-latex>OC</rendu-latex>
+      </vocabulaire>				
+      <vocabulaire>
+	<commande-latex>ordresCorrection</commande-latex>
+	<rendu-latex>Ordres de Correction</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pgcCourt</commande-latex>
+	<rendu-latex>PGC</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pic</commande-latex>
+	<rendu-latex>Projet INSA Certifié</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>picCourt</commande-latex>
+	<rendu-latex>PIC</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>pics</commande-latex>
+	<rendu-latex>Projets INSA Certifiés</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>planQualite</commande-latex>
+	<rendu-latex>Plan Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>planQualiteCourt</commande-latex>
+	<rendu-latex>PQ</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>plansQualite</commande-latex>
+	<rendu-latex>Plans Qualité</rendu-latex>
+      </vocabulaire>		
+      <vocabulaire>
+	<commande-latex>processusDeux</commande-latex>
+	<rendu-latex>\emph{\dgqDeux{}}</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>processusTrois</commande-latex>
+	<rendu-latex>\emph{\dgqTrois{}}</rendu-latex>
+      </vocabulaire>												
+      <vocabulaire>
+	<commande-latex>processusUn</commande-latex>
+	<rendu-latex>\emph{\dgqUn{}}</rendu-latex>
+      </vocabulaire>		
+      <vocabulaire>
+	<commande-latex>projetPIC</commande-latex>
+	<rendu-latex>Projet PIC</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>projetsPIC</commande-latex>
+	<rendu-latex>Projets PIC</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pgc</commande-latex>
+	<rendu-latex>Plan de Gestion des Configurations</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pti</commande-latex>
+	<rendu-latex>Plan de Tests d'Intégration</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptiCourt</commande-latex>
+	<rendu-latex>PTI</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptis</commande-latex>
+	<rendu-latex>Plans de Tests d'Intégration</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptu</commande-latex>
+	<rendu-latex>Plan de Tests Unitaires</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptuCourt</commande-latex>
+	<rendu-latex>PTU</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptus</commande-latex>
+	<rendu-latex>Plans de Tests Unitaires</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptv</commande-latex>
+	<rendu-latex>Plan de Tests de Validation</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptvCourt</commande-latex>
+	<rendu-latex>PTV</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>ptvs</commande-latex>
+	<rendu-latex>Plans de Tests de Validation</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pv</commande-latex>
+	<rendu-latex>Procès-Verbal</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pvCourt</commande-latex>
+	<rendu-latex>PV</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>pvs</commande-latex>
+	<rendu-latex>Procès-Verbaux</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rd</commande-latex>
+	<rendu-latex>Revue de Département</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdCourt</commande-latex>
+	<rendu-latex>RD</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rds</commande-latex>
+	<rendu-latex>Revues de Département</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdse</commande-latex>
+	<rendu-latex>Revue du Dossier des Spécifications Externes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdseCourt</commande-latex>
+	<rendu-latex>RDSE</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdses</commande-latex>
+	<rendu-latex>Revues du Dossier des Spécifications Externes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdsi</commande-latex>
+	<rendu-latex>Revue du Dossier des Spécifications Internes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdsiCourt</commande-latex>
+	<rendu-latex>RDSI</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rdsis</commande-latex>
+	<rendu-latex>Revues du Dossier des Spécifications Internes</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex nbparam="3">reference</commande-latex>
+	<rendu-latex>(ref. #1 #2 #3)</rendu-latex>
+	<explication>permet de créer une référence avec le paramètre #1 le nom du document contenant, le paramètre #2 correspondant au type de document et le paramètre #3 correspondant au numéro de document.</explication>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>referentielQualite</commande-latex>
+        <rendu-latex>Référentiel Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>revueDeDirection</commande-latex>
+	<rendu-latex>Revue de Direction</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>revuesDeDirection</commande-latex>
+	<rendu-latex>Revues de Direction</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rpti</commande-latex>
+	<rendu-latex>Revue du \pti{}</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rptiCourt</commande-latex>
+	<rendu-latex>RPTI</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rptis</commande-latex>
+	<rendu-latex>Revues du \pti{}</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rptv</commande-latex>
+	<rendu-latex>Revue du \ptv{}</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>responsableSAIC</commande-latex>
+	<rendu-latex>S. VANDER EECKEN</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rptvCourt</commande-latex>
+	<rendu-latex>RPTV</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>rptvs</commande-latex>
+	<rendu-latex>Revues du \ptv{}</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>siteQualite</commande-latex>
+	<rendu-latex>http://qualite.insa-rouen.fr</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>saic</commande-latex>
+	<rendu-latex>Service des Activités Industrielles et Commerciales</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>saicCourt</commande-latex>
+	<rendu-latex>SAIC</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>smq</commande-latex>
+	<rendu-latex>Système de Management de la Qualité</rendu-latex>
+      </vocabulaire>	
+      <vocabulaire>
+	<commande-latex>smqCourt</commande-latex>
+	<rendu-latex>SMQ</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>tuteurQualite</commande-latex>
+        <rendu-latex>Tuteur Qualité</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>tuteurQualites</commande-latex>
+	<rendu-latex>Tuteurs Qualité</rendu-latex>
+      </vocabulaire>		
+      <vocabulaire>
+	<commande-latex>tuteurPedagogique</commande-latex>
+	<rendu-latex>Tuteur Pédagogique</rendu-latex>
+      </vocabulaire>
+      <vocabulaire>
+	<commande-latex>tuteurPedagogiques</commande-latex>
+	<rendu-latex>Tuteurs Pédagogiques</rendu-latex>
+      </vocabulaire>
+    </categorie>
+		
+  <categorie nom="Vocabulaire lié au département MRIE">
+
+    <vocabulaire>
+      <commande-latex>unitePPRI</commande-latex>
+      <rendu-latex>Unité PPRI</rendu-latex>
+    </vocabulaire>	
+
+    <vocabulaire>
+      <commande-latex>departementMRIE</commande-latex>
+      <rendu-latex>Département MRIE</rendu-latex>
+    </vocabulaire>	
+    <vocabulaire>
+      <commande-latex>directionMRIE</commande-latex>
+      <rendu-latex>Direction du \departementMRIE{}</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>responsableInformatiqueMRIE</commande-latex>
+      <rendu-latex>J-C. BUVAT</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>responsableLaboratoireDAnalyse</commande-latex>
+      <rendu-latex>S. MARCOTTE</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>responsableLaboratoireProcedesTechnicum</commande-latex>
+      <rendu-latex>I. POLAERT</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>secretaireMRIE</commande-latex>
+      <rendu-latex>M-C. GAUQUELIN</rendu-latex>
+    </vocabulaire>
+  </categorie>
+</vocabulaires>

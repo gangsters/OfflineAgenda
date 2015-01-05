@@ -1,0 +1,203 @@
+
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{commun/vocabulaireCommun}
+
+%\RequirePackage{soul}
+
+\newif\if@debug \@debugfalse
+
+\DeclareOption{debug}{\@debugtrue}
+
+\ProcessOptions
+
+%\sethlcolor{green}
+
+\newcommand{\vocabulaireDebug}[1]{%
+\if@debug%
+\color{blue}#1\color{black}%
+\else%
+#1%
+\fi}
+%Vocabulaire lié à l'INSA
+\newcommand{\adresseInsa}{\vocabulaireDebug{Avenue de l'Université - BP 8 - 76801 SAINT ETIENNE DU ROUVRAY}}
+ \newcommand{\asi}{\vocabulaireDebug{Architecture des Systèmes d'Information}}
+ \newcommand{\asiCourt}{\vocabulaireDebug{ASI}}
+ \newcommand{\cfi}{\vocabulaireDebug{Chimie Fine et Ingénierie}}
+ \newcommand{\cfiCourt}{\vocabulaireDebug{CFI}}
+ \newcommand{\creditsECTS}{\vocabulaireDebug{crédits \ectsCourt{}}}
+ \newcommand{\CreditECTS}{\vocabulaireDebug{Crédit \ectsCourt{}}}
+ \newcommand{\cti}{\vocabulaireDebug{Commission des Titres d'Ingénieur}}
+ \newcommand{\ctiCourt}{\vocabulaireDebug{CTI}}
+ \newcommand{\departementCFI}{\vocabulaireDebug{Département CFI}}
+ \newcommand{\directeurINSARouen}{\vocabulaireDebug{J-L. BILLOET}}
+ \newcommand{\directionCFI}{\vocabulaireDebug{Direction du \departementCFI{}}}
+ \newcommand{\directionQualite}{\vocabulaireDebug{Direction Qualité}}
+ \newcommand{\ecao}{\vocabulaireDebug{Élément Constitutif d'Approfondissement ou d'Ouverture}}
+ \newcommand{\ecaoCourt}{\vocabulaireDebug{ECAO}}
+ \newcommand{\ects}{\vocabulaireDebug{European Credit Transfer and Accumulation System}}
+ \newcommand{\ectsCourt}{\vocabulaireDebug{ECTS}}
+ \newcommand{\eleveIngenieur}{\vocabulaireDebug{élève-ingénieur}}
+ \newcommand{\EleveIngenieur}{\vocabulaireDebug{\'Elève-ingénieur}}
+ \newcommand{\elevesIngenieurs}{\vocabulaireDebug{élèves-ingénieurs}}
+ \newcommand{\ElevesIngenieurs}{\vocabulaireDebug{\'Elèves-ingénieurs}}
+ \newcommand{\ep}{\vocabulaireDebug{Energétique et Propulsion}}
+ \newcommand{\epCourt}{\vocabulaireDebug{EP}}
+ \newcommand{\Etudiant}{\vocabulaireDebug{\'Elève-ingénieur}}
+ \newcommand{\etudiant}{\vocabulaireDebug{élève-ingénieur}}
+ \newcommand{\Etudiants}{\vocabulaireDebug{\'Elèves-ingénieurs}}
+ \newcommand{\etudiants}{\vocabulaireDebug{élèves-ingénieurs}}
+ \newcommand{\gc}{\vocabulaireDebug{Génie Civil et Constructions Durables}}
+ \newcommand{\gcCourt}{\vocabulaireDebug{GCCD}}
+ \newcommand{\gm}{\vocabulaireDebug{Génie Mathématiques}}
+ \newcommand{\gmCourt}{\vocabulaireDebug{GM}}
+ \newcommand{\insa}{\vocabulaireDebug{Institut National des Sciences Appliquées}}
+ \newcommand{\insaCourt}{\vocabulaireDebug{INSA}}
+ \newcommand{\insaRouen}{\vocabulaireDebug{\insaCourt{} de Rouen}}
+ \newcommand{\meca}{\vocabulaireDebug{Mécanique}}
+ \newcommand{\mecaCourt}{\vocabulaireDebug{MECA}}
+ \newcommand{\mpecao}{\vocabulaireDebug{Maintenance Par \ecao{}}}
+ \newcommand{\mpecaoCourt}{\vocabulaireDebug{MPECAO}}
+ \newcommand{\mrie}{\vocabulaireDebug{Maîtrise des Risques Industriels et Environnementaux}}
+ \newcommand{\mrieCourt}{\vocabulaireDebug{MRIE}}
+ \newcommand{\msa}{\vocabulaireDebug{Mont Saint-Aignan}}
+ \newcommand{\msaCourt}{\vocabulaireDebug{MSA}}
+ \newcommand{\ppri}{\vocabulaireDebug{Projets Pluridisciplinaires de Recherche et d'Ingénierie}}
+ \newcommand{\ppriCourt}{\vocabulaireDebug{PPRI}}
+ \newcommand{\pteci}{\vocabulaireDebug{Psychologie du Travail en \'Equipe et Communication Interpersonnelle}}
+ \newcommand{\pteciCourt}{\vocabulaireDebug{PTECI}}
+ \newcommand{\ser}{\vocabulaireDebug{Saint-Etienne du Rouvray}}
+ \newcommand{\serCourt}{\vocabulaireDebug{SER}}
+ \newcommand{\sri}{\vocabulaireDebug{Direction des Relations Industrielles et des Partenariats}}
+ \newcommand{\sriCourt}{\vocabulaireDebug{DRIP}}
+ \newcommand{\stage}{\vocabulaireDebug{stage de formation professionnelle}}
+ \newcommand{\stagiaire}{\vocabulaireDebug{\etudiant{} stagiaire}}
+ \newcommand{\stagiaires}{\vocabulaireDebug{\etudiants{} stagiaires}}
+ \newcommand{\stpi}{\vocabulaireDebug{Sciences et Technologies Pour l'Ingénieur}}
+ \newcommand{\stpiCourt}{\vocabulaireDebug{STPI}}
+ \newcommand{\ue}{\vocabulaireDebug{Unité d'Enseignement}}
+ \newcommand{\ueCourt}{\vocabulaireDebug{UE}}
+ \newcommand{\ues}{\vocabulaireDebug{Unités d'Enseignement}}
+ %Vocabulaire lié aux PICs
+\newcommand{\cgp}{\vocabulaireDebug{Comité de Gestion de Projet}}
+ \newcommand{\cgpCourt}{\vocabulaireDebug{CGP}}
+ \newcommand{\client}{\vocabulaireDebug{client}}
+ \newcommand{\Client}{\vocabulaireDebug{Client}}
+ \newcommand{\clients}{\vocabulaireDebug{clients}}
+ \newcommand{\confere}[2]{\vocabulaireDebug{(cf. #1 #2)}}
+ \newcommand{\dgp}{\vocabulaireDebug{Dossier de Gestion de Projet}}
+ \newcommand{\dgpCourt}{\vocabulaireDebug{DGP}}
+ \newcommand{\dgps}{\vocabulaireDebug{Dossiers de Gestion de Projet}}
+ \newcommand{\directionSI}{\vocabulaireDebug{Direction des Systèmes d'Information}}
+ \newcommand{\directionSICourt}{\vocabulaireDebug{DSI}}
+ \newcommand{\dgq}{\vocabulaireDebug{Disposition Générale de Qualité}}
+ \newcommand{\dgqCourt}{\vocabulaireDebug{DGQ}}
+ \newcommand{\dgqs}{\vocabulaireDebug{Dispositions Générales de Qualité}}
+ \newcommand{\dse}{\vocabulaireDebug{Dossier de Spécifications Externes}}
+ \newcommand{\dseCourt}{\vocabulaireDebug{DSE}}
+ \newcommand{\dses}{\vocabulaireDebug{Dossiers de Spécifications Externes}}
+ \newcommand{\dsi}{\vocabulaireDebug{Dossier de Spécifications Internes}}
+ \newcommand{\dsiCourt}{\vocabulaireDebug{DSI}}
+ \newcommand{\dsis}{\vocabulaireDebug{Dossiers de Spécifications Internes}}
+ \newcommand{\dsq}{\vocabulaireDebug{Dossier de Suivi de la Qualité}}
+ \newcommand{\dsqCourt}{\vocabulaireDebug{DSQ}}
+ \newcommand{\dsqs}{\vocabulaireDebug{Dossiers de Suivi de la Qualité}}
+ \newcommand{\dti}{\vocabulaireDebug{Dossier de Tests d'Intégration}}
+ \newcommand{\dtiCourt}{\vocabulaireDebug{DTI}}
+ \newcommand{\dtu}{\vocabulaireDebug{Dossier de Tests Unitaires}}
+ \newcommand{\dtuCourt}{\vocabulaireDebug{DTU}}
+ \newcommand{\dtv}{\vocabulaireDebug{Dossier de Tests de Validation}}
+ \newcommand{\dtvCourt}{\vocabulaireDebug{DTV}}
+ \newcommand{\ec}{\vocabulaireDebug{Élément Constitutif}}
+ \newcommand{\ecCourt}{\vocabulaireDebug{EC}}
+ \newcommand{\ecs}{\vocabulaireDebug{Éléments Constitutifs}}
+ \newcommand{\fft}{\vocabulaireDebug{Fiche de Fait Technique}}
+ \newcommand{\fftCourt}{\vocabulaireDebug{FFT}}
+ \newcommand{\ffts}{\vocabulaireDebug{Fiches de Fait Technique}}
+ \newcommand{\ficheCompetence}{\vocabulaireDebug{fiche de compétences}}
+ \newcommand{\FicheCompetence}{\vocabulaireDebug{Fiche de compétences}}
+ \newcommand{\fichesCompetence}{\vocabulaireDebug{fiches de compétences}}
+ \newcommand{\FichesCompetence}{\vocabulaireDebug{Fiches de compétences}}
+ \newcommand{\ficheRole}{\vocabulaireDebug{fiche de rôle}}
+ \newcommand{\FicheRole}{\vocabulaireDebug{Fiche de rôle}}
+ \newcommand{\fichesRole}{\vocabulaireDebug{fiches de rôle}}
+ \newcommand{\FichesRole}{\vocabulaireDebug{Fiches de rôle}}
+ \newcommand{\idefZero}{\vocabulaireDebug{IDEF0}}
+ \newcommand{\igq}{\vocabulaireDebug{Instruction Générale Qualité}}
+ \newcommand{\igqCourt}{\vocabulaireDebug{IGQ}}
+ \newcommand{\isoDixNeufMilleOnze}{\vocabulaireDebug{ISO 19011:2002}}
+ \newcommand{\isoNeufMille}{\vocabulaireDebug{ISO 9000:2005}}
+ \newcommand{\isoNeufMilleQuatre}{\vocabulaireDebug{ISO 9004:2000}}
+ \newcommand{\isoNeufMilleUn}{\vocabulaireDebug{ISO 9001:2008}}
+ \newcommand{\isoQuatorzeMilleUn}{\vocabulaireDebug{ISO 14001:2004}}
+ \newcommand{\manuelQualite}{\vocabulaireDebug{Manuel Qualité}}
+ \newcommand{\manuelQualiteCourt}{\vocabulaireDebug{MQ}}
+ \newcommand{\missionQualite}{\vocabulaireDebug{Mission Qualité}}
+ \newcommand{\nonQualite}{\vocabulaireDebug{Non-Qualité}}
+ \newcommand{\nonQualites}{\vocabulaireDebug{Non-Qualités}}
+ \newcommand{\ordreCorrection}{\vocabulaireDebug{Ordre de Correction}}
+ \newcommand{\ocCourt}{\vocabulaireDebug{OC}}
+ \newcommand{\ordresCorrection}{\vocabulaireDebug{Ordres de Correction}}
+ \newcommand{\pgcCourt}{\vocabulaireDebug{PGC}}
+ \newcommand{\pic}{\vocabulaireDebug{Projet INSA Certifié}}
+ \newcommand{\picCourt}{\vocabulaireDebug{PIC}}
+ \newcommand{\pics}{\vocabulaireDebug{Projets INSA Certifiés}}
+ \newcommand{\planQualite}{\vocabulaireDebug{Plan Qualité}}
+ \newcommand{\planQualiteCourt}{\vocabulaireDebug{PQ}}
+ \newcommand{\plansQualite}{\vocabulaireDebug{Plans Qualité}}
+ \newcommand{\processusDeux}{\vocabulaireDebug{\emph{\dgqDeux{}}}}
+ \newcommand{\processusTrois}{\vocabulaireDebug{\emph{\dgqTrois{}}}}
+ \newcommand{\processusUn}{\vocabulaireDebug{\emph{\dgqUn{}}}}
+ \newcommand{\projetPIC}{\vocabulaireDebug{Projet PIC}}
+ \newcommand{\projetsPIC}{\vocabulaireDebug{Projets PIC}}
+ \newcommand{\pgc}{\vocabulaireDebug{Plan de Gestion des Configurations}}
+ \newcommand{\pti}{\vocabulaireDebug{Plan de Tests d'Intégration}}
+ \newcommand{\ptiCourt}{\vocabulaireDebug{PTI}}
+ \newcommand{\ptis}{\vocabulaireDebug{Plans de Tests d'Intégration}}
+ \newcommand{\ptu}{\vocabulaireDebug{Plan de Tests Unitaires}}
+ \newcommand{\ptuCourt}{\vocabulaireDebug{PTU}}
+ \newcommand{\ptus}{\vocabulaireDebug{Plans de Tests Unitaires}}
+ \newcommand{\ptv}{\vocabulaireDebug{Plan de Tests de Validation}}
+ \newcommand{\ptvCourt}{\vocabulaireDebug{PTV}}
+ \newcommand{\ptvs}{\vocabulaireDebug{Plans de Tests de Validation}}
+ \newcommand{\pv}{\vocabulaireDebug{Procès-Verbal}}
+ \newcommand{\pvCourt}{\vocabulaireDebug{PV}}
+ \newcommand{\pvs}{\vocabulaireDebug{Procès-Verbaux}}
+ \newcommand{\rd}{\vocabulaireDebug{Revue de Département}}
+ \newcommand{\rdCourt}{\vocabulaireDebug{RD}}
+ \newcommand{\rds}{\vocabulaireDebug{Revues de Département}}
+ \newcommand{\rdse}{\vocabulaireDebug{Revue du Dossier des Spécifications Externes}}
+ \newcommand{\rdseCourt}{\vocabulaireDebug{RDSE}}
+ \newcommand{\rdses}{\vocabulaireDebug{Revues du Dossier des Spécifications Externes}}
+ \newcommand{\rdsi}{\vocabulaireDebug{Revue du Dossier des Spécifications Internes}}
+ \newcommand{\rdsiCourt}{\vocabulaireDebug{RDSI}}
+ \newcommand{\rdsis}{\vocabulaireDebug{Revues du Dossier des Spécifications Internes}}
+ \newcommand{\reference}[3]{\vocabulaireDebug{(ref. #1 #2 #3)}}
+ \newcommand{\referentielQualite}{\vocabulaireDebug{Référentiel Qualité}}
+ \newcommand{\revueDeDirection}{\vocabulaireDebug{Revue de Direction}}
+ \newcommand{\revuesDeDirection}{\vocabulaireDebug{Revues de Direction}}
+ \newcommand{\rpti}{\vocabulaireDebug{Revue du \pti{}}}
+ \newcommand{\rptiCourt}{\vocabulaireDebug{RPTI}}
+ \newcommand{\rptis}{\vocabulaireDebug{Revues du \pti{}}}
+ \newcommand{\rptv}{\vocabulaireDebug{Revue du \ptv{}}}
+ \newcommand{\responsableSAIC}{\vocabulaireDebug{S. VANDER EECKEN}}
+ \newcommand{\rptvCourt}{\vocabulaireDebug{RPTV}}
+ \newcommand{\rptvs}{\vocabulaireDebug{Revues du \ptv{}}}
+ \newcommand{\siteQualite}{\vocabulaireDebug{http://qualite.insa-rouen.fr}}
+ \newcommand{\saic}{\vocabulaireDebug{Service des Activités Industrielles et Commerciales}}
+ \newcommand{\saicCourt}{\vocabulaireDebug{SAIC}}
+ \newcommand{\smq}{\vocabulaireDebug{Système de Management de la Qualité}}
+ \newcommand{\smqCourt}{\vocabulaireDebug{SMQ}}
+ \newcommand{\tuteurQualite}{\vocabulaireDebug{Tuteur Qualité}}
+ \newcommand{\tuteurQualites}{\vocabulaireDebug{Tuteurs Qualité}}
+ \newcommand{\tuteurPedagogique}{\vocabulaireDebug{Tuteur Pédagogique}}
+ \newcommand{\tuteurPedagogiques}{\vocabulaireDebug{Tuteurs Pédagogiques}}
+ %Vocabulaire lié au département MRIE
+\newcommand{\unitePPRI}{\vocabulaireDebug{Unité PPRI}}
+ \newcommand{\departementMRIE}{\vocabulaireDebug{Département MRIE}}
+ \newcommand{\directionMRIE}{\vocabulaireDebug{Direction du \departementMRIE{}}}
+ \newcommand{\responsableInformatiqueMRIE}{\vocabulaireDebug{J-C. BUVAT}}
+ \newcommand{\responsableLaboratoireDAnalyse}{\vocabulaireDebug{S. MARCOTTE}}
+ \newcommand{\responsableLaboratoireProcedesTechnicum}{\vocabulaireDebug{I. POLAERT}}
+ \newcommand{\secretaireMRIE}{\vocabulaireDebug{M-C. GAUQUELIN}}
+ 
+\endinput

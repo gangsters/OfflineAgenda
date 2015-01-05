@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<vocabulaires>
+  <categorie nom="Vocabulaire lié aux entités">
+    <vocabulaire>
+      <commande-latex>departementASI</commande-latex>
+      <rendu-latex>Département ASI</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>directionASI</commande-latex>
+      <rendu-latex>Direction du \departementASI{}</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mailDep</commande-latex>
+      <rendu-latex>asi@insa-rouen.fr</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>siteDep</commande-latex>
+      <rendu-latex>http://asi.insa-rouen.fr</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>unite</commande-latex>
+      <rendu-latex>Unité P3</rendu-latex>
+    </vocabulaire>
+  </categorie>		
+  <categorie nom="Vocabulaire lié aux documents">	
+    <vocabulaire>
+      <commande-latex>dgqDeux</commande-latex>
+      <rendu-latex>Réaliser les PIC</rendu-latex>
+    </vocabulaire>	
+    <vocabulaire>
+      <commande-latex>dgqDeuxCourt</commande-latex>
+      <rendu-latex>DGQ2</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>dgqTrois</commande-latex>
+      <rendu-latex>Manager la Qualité</rendu-latex>
+    </vocabulaire>	
+    <vocabulaire>
+      <commande-latex>dgqTroisCourt</commande-latex>
+      <rendu-latex>DGQ3</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>dgqUn</commande-latex>
+      <rendu-latex>Rechercher, choisir et contractualiser les PIC</rendu-latex>
+    </vocabulaire>	
+    <vocabulaire>
+      <commande-latex>dgqUnCourt</commande-latex>
+      <rendu-latex>DGQ1</rendu-latex>
+    </vocabulaire>					
+    <vocabulaire>
+      <commande-latex nbparam="2">referenceDGQAvecVersion</commande-latex>
+      <rendu-latex>ASI-DGQ-DGQ#1V#2</rendu-latex>
+      <explication>avec le paramètre #1 pour le numéro de dgq et #2 pour le numéro de version</explication>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex nbparam="1">referenceDGQSansVersion</commande-latex>
+      <rendu-latex>ASI-DGQ-DGQ#1</rendu-latex>
+      <explication>avec le paramètre #1 pour le numéro de dgq</explication>
+    </vocabulaire>		
+    <vocabulaire>
+      <commande-latex nbparam="1">referenceMQAvecVersion</commande-latex>
+      <rendu-latex>ASI-MQ-MQASIV#1</rendu-latex>
+      <explication>avec le paramètre #1 pour le numéro de version</explication>
+    </vocabulaire>				
+    <vocabulaire>
+      <commande-latex>referenceMQSansVersion</commande-latex>
+      <rendu-latex>ASI-MQ-MQASI</rendu-latex>
+    </vocabulaire>
+  </categorie>
+  <categorie nom="Vocabulaire lié à la qualité">		
+    <vocabulaire>
+      <commande-latex>chefPIC</commande-latex>
+      <rendu-latex>Chef PIC</rendu-latex>
+    </vocabulaire>
+
+    <vocabulaire>
+      <commande-latex>chefsPIC</commande-latex>
+      <rendu-latex>Chefs PIC</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mgpi</commande-latex>
+      <rendu-latex>Maîtrise des Grands Projets Informatiques</rendu-latex>
+    </vocabulaire>
+    <vocabulaire>
+      <commande-latex>mgpiCourt</commande-latex>
+      <rendu-latex>MGPI</rendu-latex>
+    </vocabulaire>
+  </categorie>
+</vocabulaires>
