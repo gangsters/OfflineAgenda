@@ -8,7 +8,7 @@
 
 		private static function connect () {
 			try {
-				Db::$connection = new PDO('mysql:host='.self::$servername.';port=8889;dbname='.self::$dbname, self::$username, self::$password);
+				Db::$connection = new PDO('mysql:host='.self::$servername.';dbname='.self::$dbname, self::$username, self::$password);
 				Db::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 			catch (PDOException $e) {

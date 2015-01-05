@@ -9,7 +9,7 @@ node "Browser" {
 	[Controller layer]
 	
 	database "web client database" {
-		[HTML5 indexed database]	
+		[PouchDB NoSql database]	
 	}
 } 
 
@@ -23,13 +23,13 @@ node "JS web server" {
 '--------------------------------
 ' THE SERVER-SIDE DATABASE
 database "server database" {
-	[MongoDB NoSql database]
+	[CouchDB NoSql database]
 }
 
 '--------------------------------
 'HERE ARE THE RELATIONS
-[MongoDB NoSql database] --> [Asynchronisation layer] : "1 or 2 : notify changes"
-[MongoDB NoSql database] <-- [Asynchronisation layer] : "3 : push merged data"
+[CouchDB NoSql database] --> [Asynchronisation layer] : "1 or 2 : notify changes"
+[CouchDB NoSql database] <-- [Asynchronisation layer] : "3 : push merged data"
 [Asynchronisation layer] <-- [Asynchronisation layer] : "2: resolve conflicts"
 [RESTful API] <-- [Asynchronisation layer] : "3: push merged data"
 [RESTful API] --> [Asynchronisation layer] : "1 or 2: notify changes"
@@ -39,8 +39,8 @@ database "server database" {
 
 [Presentation layer] --> [Controller layer] : "user action"
 [Presentation layer] <-- [Controller layer] : "update"
-[Controller layer] --> [HTML5 indexed database] : "update"
-[Controller layer] <-- [HTML5 indexed database] : "notify"
+[Controller layer] --> [PouchDB NoSql database] : "update"
+[Controller layer] <-- [PouchDB NoSql database] : "notify"
 
 'other relations
 User -- [Presentation layer]
