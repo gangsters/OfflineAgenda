@@ -7,3 +7,13 @@ body {
 	max-width: 500px;
 	margin: 0 auto;
 }
+
+#trash-area {
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+}
+
+#trash {
+	height: 50px;
+}

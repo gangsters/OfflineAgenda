@@ -1,0 +1,41 @@
+// request from client GET['query']
+query="create|readAll|update|delete",
+
+// request from client if create|update|delete
+event={
+		"id": "value", 
+		"title": "value", // only for create & update
+		"beginDate": "value", // only for create & update
+		"endDate": "value" // only for create & update
+	}
+
+// response for create, update & delete
+{
+	"error": "OK|KO",
+	"message": "value" // optional
+}
+
+// response for readAll if an error happened
+{
+	"error": "KO",
+	"message": "value"
+}
+
+// response for readAll if success
+{
+	"error": "OK",
+	"events": {
+				"id_value": {
+							"id": "value",
+							"title": "value",
+							"beginDate": "value",
+							"endDate": "value"
+				 },
+	 			"id_value": {
+							"id": "value",
+							"title": "value",
+							"beginDate": "value",
+							"endDate": "value"
+				 }
+				}
+}

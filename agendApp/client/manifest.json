@@ -6,11 +6,12 @@
   "author": "Jérémy GUILLON, Nicolas LECOMPTE",
   "app": {
     "background": {
-      "scripts": ["src/js/main.js"]
+      "scripts": ["js/main.js"]
     }
   },
   "icons": {
     "16": "res/agendapp-icon-16.png", 
     "128": "res/agendapp-icon-128.png" 
-  }
+  },
+ "permissions": ["http://localhost/agendapp/*"]
 }
