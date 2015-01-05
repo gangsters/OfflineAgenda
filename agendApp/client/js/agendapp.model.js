@@ -105,7 +105,9 @@ agendapp.model = {
 		CalendarEvent.prototype.fromFullCalendarEvent = function(calEvent) {
 			this.title = calEvent.title;
 			this.beginDate = calEvent.start.format();
-			this.endDate = calEvent.end.format();
+			if(calEvent.end) {
+				this.endDate = calEvent.end.format();
+			}
 			this.id = calEvent.id;
 		}
 		
