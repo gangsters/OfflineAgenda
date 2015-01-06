@@ -217,9 +217,6 @@ agendapp.model = {
                     newevent.toDelete = false;
 					agendapp.model.events_server.push(newevent);
 				}
-				console.log(arrayLength+' events got from server.');
-                console.log('############### events server#################');
-                console.log(agendapp.model.events_server);
 				callback();
 			}
 			else{
@@ -237,8 +234,6 @@ agendapp.model = {
 		if(db) {
 			// reset local events list
             agendapp.model.events_local = [];
-            console.log('----------------------------------au début de get all from local db : events_loca');
-            console.log(agendapp.model.events_local);
 			// start transaction with the event table (also called object store)
 			var trans = db.transaction(["event"], "readwrite");
 			// get the object store
@@ -257,9 +252,6 @@ agendapp.model = {
 			};
 			cursorRequest.onerror = agendapp.model.localDB.onError;
 			trans.oncomplete = function(e) {
-                console.log(agendapp.model.events_local.length + ' events retrieved from local database.');
-                console.log('-----------------------------à fin de get all from local db : events_loca');
-                console.log(agendapp.model.events_local);
                 callback();
 			}
 		}
@@ -408,22 +400,17 @@ agendapp.model = {
      * @return true if array contains calendarevent ; false otherwise
      */
     events_local_contains: function(calendarevent){
-        console.log('--- au début de local contains--- longueur de events_local : '+agendapp.model.events_local.length);
-        console.log(agendapp.model.events_local);
         var result = false;
         if (typeof calendarevent.id != 'undefined'){
             var length = agendapp.model.events_local.length;
             var i = 0;
             while (!result && i<length) {
                 if(typeof agendapp.model.events_local[i].id != 'undefined'){
-                    console.log('events local id '+agendapp.model.events_local[i].id+' ?= '+calendarevent.id+' calendar id');
-                    console.log(i+' / '+length);
                     result = agendapp.model.events_local[i].id == calendarevent.id;
                 }
                 i++;
             }
         }
-        console.log('events local contains a fucking event from server --------?'+result);
         return result;
     },
         
