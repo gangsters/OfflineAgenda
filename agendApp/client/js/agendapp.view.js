@@ -35,6 +35,8 @@ agendapp.view = {
 				$('#trash').attr('src','res/trash.png');
 			}
 		});
+        // getting and displaying the events in the view
+        agendapp.view.refresh();
 	},
 
 	showAddEventForm: function(start, end) {

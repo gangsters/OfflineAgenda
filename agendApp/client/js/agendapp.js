@@ -9,8 +9,7 @@ var agendapp = {
 	controller: null, // See agendapp.controller.js
 
 	init: function () {
-		this.model.pre_init();
-		this.view.init();
+		this.model.pre_init(this.view.init);
 		this.controller.init();
 	},
 

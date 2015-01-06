@@ -14,7 +14,7 @@ agendapp.controller = {
 				$('#add-event-form #start').val(),
 				$('#add-event-form #end').val()
 			);
-			agendapp.model.save(newEvent);
+			agendapp.model.save(newEvent, agendapp.view.refresh);
 		}
 		$.unblockUI(); // Remove the pop-up
 		jsEvent.preventDefault(); // Avoïd the page to be reloaded
@@ -23,14 +23,13 @@ agendapp.controller = {
 	dropEvent: function(calEvent, delta, revertFunc) {
 		var myEvent = new agendapp.model.CalendarEvent();
 		myEvent.fromFullCalendarEvent(calEvent);
-		console.log(myEvent);
-		agendapp.model.save(myEvent);
+		agendapp.model.save(myEvent, agendapp.view.refresh);
 	},
 	
 	resizeEvent: function(calEvent, delta, revertFunc) {
 		var myEvent = new agendapp.model.CalendarEvent();
 		myEvent.fromFullCalendarEvent(calEvent);
-		agendapp.model.save(myEvent);
+		agendapp.model.save(myEvent, agendapp.view.refresh);
 	},
 	
 	editEvent: function(jsEvent) {
@@ -39,7 +38,7 @@ agendapp.controller = {
 			editedEvents[i].title = $('#edit-event-form #title').val();
 			var myEvent = new agendapp.model.CalendarEvent();
 			myEvent.fromFullCalendarEvent(editedEvents[i]);
-			agendapp.model.save(myEvent);
+			agendapp.model.save(myEvent, agendapp.view.refresh);
 		};
 		$.unblockUI(); // Remove the pop-up
 		jsEvent.preventDefault();
@@ -50,7 +49,7 @@ agendapp.controller = {
 		for (var i = editedEvents.length - 1; i >= 0; i--) {
 			var myEvent = new agendapp.model.CalendarEvent();
 			myEvent.fromFullCalendarEvent(editedEvents[i]);
-			agendapp.model.delete(myEvent);
+			agendapp.model.delete(myEvent, agendapp.view.refresh);
 		};
 		$.unblockUI(); // Remove the pop-up
 		jsEvent.preventDefault();
