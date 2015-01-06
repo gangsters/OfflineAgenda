@@ -7,7 +7,7 @@ agendapp.model = {
 	localDB: {
 		db: null,
 		open: function(callback1, callback2) {
-			var version = 16;
+			var version = 17;
 			console.log('Opening local database');
 			var request = indexedDB.open("agendapp", version);
 
@@ -265,17 +265,8 @@ agendapp.model = {
 	 * Fetch all events from local database (fullCalendar callback)
 	 */
 	fetchEvents: function (start, end, timezone, callback) {
+		var db = agendapp.model.localDB.db;
 		var events = [];
-        for(var i=0; i <agendapp.model.events_local.length; i++){
-            if (!agendapp.model.events_local[i].toDelete){
-                event = agendapp.model.events_local[i];
-                event.start = event.beginDate;
-                event.end = event.endDate;
-                events.push(event);
-            }
-        }
-
-/*		var db = agendapp.model.localDB.db;
 		if(db) {
 			// start transaction with the event table (also called object store)
 			var trans = db.transaction(["event"], "readwrite");
@@ -300,9 +291,9 @@ agendapp.model = {
 			cursorRequest.onerror = agendapp.model.localDB.onError;
 			trans.oncomplete =  function(e) {
 				console.log("All events have been successfully fetched from local database.");
-*/				callback(events);
-/*			}
-		}*/
+				callback(events);
+			}
+		}
 	},
 	
 	/*** SIMPLE FUNCTIONS FOR PERSISTENCE - CONTROLLERS MUST CALL THESE FUNCTIONS AND NO OTHER !***/
