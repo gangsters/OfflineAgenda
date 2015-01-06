@@ -7,7 +7,7 @@ agendapp.model = {
 	localDB: {
 		db: null,
 		open: function(callback1, callback2) {
-			var version = 18;
+			var version = 20;
 			console.log('Opening local database');
 			var request = indexedDB.open("agendapp", version);
 
@@ -211,7 +211,7 @@ agendapp.model = {
 	 			var arrayLength = events_obj.length;
 	 			for (var i = 0; i < arrayLength; i++) {
 	 				var newevent = new agendapp.model.CalendarEvent(events_obj[i].title, events_obj[i].beginDate, events_obj[i].endDate);
-	 				newevent.id = events_obj[i].id;
+	 				newevent.id = parseInt(events_obj[i].id);
 	 				newevent.isDirty = false;
 	 				newevent.toDelete = false;
 	 				agendapp.model.events_server.push(newevent);
@@ -537,20 +537,24 @@ else {
 					console.log('in if');
 					// local dirty (modified) => local event wins over server event // CHOICE TO PRIVILEGE LOCAL
 					if (localevent.isDirty && !localevent.toDelete) {
-						localevent.save_to_server(function(){
-							agendapp.model.events_local[localevent_position].isDirty = false;
-							agendapp.model.events_local[localevent_position].save_to_localdb(function(){
-								console.log('An event modified locally overwrited an event modified by someone else. Conflict solved.');
-							});
+						localevent.save_to_server(function (result){
+							if(result.error == 'OK'){
+								agendapp.model.events_local[localevent_position].isDirty = false;
+								agendapp.model.events_local[localevent_position].save_to_localdb(function(){
+									console.log('An event modified locally overwrited an event modified by someone else. Conflict solved.');
+								});
+							}
 						});
 					}
 					// local dirty to delete (modifed locally then deleted) => delete everywhere
 					else if (localevent.isDirty && localevent.toDelete) {
-						localevent.delete_of_server(function(){
-							agendapp.model.events_local.slice(localevent_position, 1);
-							agendapp.model.events_local[localevent_position].delete_of_localdb(function(){
-								console.log('A locally modified-then-deleted event was permanently deleted.');
-							});
+						localevent.delete_of_server(function (result){
+							if(result.error == 'OK'){
+								agendapp.model.events_local.slice(localevent_position, 1);
+								agendapp.model.events_local[localevent_position].delete_of_localdb(function(){
+									console.log('A locally modified-then-deleted event was permanently deleted.');
+								});
+							}
 						});
 					}
 					// local not dirty (not modified) = server event is dirty => server event win over local event
@@ -591,7 +595,6 @@ else {
 				else{
 					var calendarevent = agendapp.model.events_local[i];
 					agendapp.model.events_local[i].save_to_server(function (result){
-						console.log(calendarevent);
 						if(result.error == 'OK'){
 							calendarevent.isDirty = false;
 							calendarevent.save_to_localdb(function(){
