@@ -569,17 +569,17 @@ else {
 			}
 		}// events_server is now same as events_local
 		// push local dirty events -> server. Then clean them (delete or undirty).
-		var locallength = agendapp.model.events_local.length;
-		
+		var events_local_temp = agendapp.model.events_local;
+        var locallength = events_local_temp.length;
 		console.log('---Local events to push (id needed) : '+locallength);
 		for (var i = 0; i <locallength; i++) {
 			// dirty events
-			if ((agendapp.model.events_local[i].isDirty != 'undefined') && agendapp.model.events_local[i].isDirty) {
+			if ((events_local_temp[i].isDirty != 'undefined') && events_local_temp[i].isDirty) {
 				// events to delete
-				if ((agendapp.model.events_local[i].toDelete != 'undefined') && agendapp.model.events_local[i].toDelete) {
-					agendapp.model.events_local[i].delete_of_server(function (result){
+				if ((events_local_temp[i].toDelete != 'undefined') && events_local_temp[i].toDelete) {
+					events_local_temp[i].delete_of_server(function (result){
 						if(result.error == 'OK') {
-							agendapp.model.events_local[i].delete_of_localdb(function(){
+							events_local_temp[i].delete_of_localdb(function(){
 								agendapp.model.events_local.slice(i, 1);
 								console.log('An event was permanently deleted.');
 							});
@@ -588,8 +588,8 @@ else {
 				}
 				// events to create or update
 				else{
-					var calendarevent = agendapp.model.events_local[i];
-					agendapp.model.events_local[i].save_to_server(function (result){
+					var calendarevent = events_local_temp[i];
+					events_local_temp[i].save_to_server(function (result){
 						if(result.error == 'OK'){
 							calendarevent.isDirty = false;
 							calendarevent.save_to_localdb(function(){
