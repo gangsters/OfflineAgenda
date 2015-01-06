@@ -1,4 +1,40 @@
 \author{Nicolas \textsc{Lecompte}}
-\begin{frame}{Solutions B}
- 
+\begin{frame}{Solution B}
+	\begin{block}{Google Chrome App}
+		\begin{itemize}
+			\item Application web agissant comme une application native
+			\item Conteneur Google Chrome
+			\item Principe du \textit{Offline First}
+		\end{itemize}
+	\end{block}
+\vfill
+\pause
+	\begin{block}{Problématiques et principes utilisés}
+		\begin{itemize}
+			\item Enregistrement asynchrone sur la BD du client
+			\item Échanges asynchrones avec le serveur
+			\item Pattern Publish-subscribe
+			\item Fusion des données du côté client
+			\item Concurrence
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Solution B}
+ 	\begin{block}{Technologies}
+		\begin{description}[SGBD serveur:]
+			\item[Client :] JavaScript
+			\item[SGBD client :] HTML5 Indexed Database 
+			\item[Serveur :] PHP
+			\item[SGBD serveur:] MySQL
+		\end{description}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Solution B}
+	\vfill
+	\begin{center}
+		\includegraphics[scale=0.2]{images/gears-icon.png}
+	\end{center}
+	\vfill
 \end{frame}
