@@ -115,7 +115,9 @@ agendapp.model = {
 			var request_data = '';
 			request_data += "query=save";
 			request_data += "&event="+JSON.stringify(this);
-			$.getJSON(SERVER_INTERFACE_URL, request_data, callback);
+			$.getJSON(SERVER_INTERFACE_URL, request_data, function(result){
+                callback(result);
+            });
 		}
 		
 		/**
@@ -144,7 +146,9 @@ agendapp.model = {
 			var request_data = '';
 			request_data += "query=delete";
 			request_data += "&event="+JSON.stringify(this);
-			$.getJSON(SERVER_INTERFACE_URL, request_data, callback);
+			$.getJSON(SERVER_INTERFACE_URL, request_data, function(){
+                callback();
+            });
 		}
 
 		/**
@@ -324,6 +328,7 @@ agendapp.model = {
 					
 				}
 				else if(result.error == 'OK'){
+                    console.log('ok');
             		calendarevent.isDirty = false;
 					calendarevent.id = parseInt(result.id);
 	    			calendarevent.save_to_localdb(function() {
@@ -470,14 +475,14 @@ agendapp.model = {
      * If an event doesn't have an id, it isn't take into account.
      * @return index of the similar event if there is one; -1 otherwise.
      */
-    get_position_same_id_event: function(calendarevent, array){
+    get_position_same_id_event: function(calendarevent){
         var result = -1;
         var found = false;
         if (typeof calendarevent.id != 'undefined'){
-            var length = array.length;
+            var length = agendapp.model.events_local.length;
             var i = 0;
             while (!found && i<length) {
-                if((typeof array[i].id != 'undefined') && (array[i].id === calendarevent.id)){
+                if((typeof agendapp.model.events_local[i].id != 'undefined') && (agendapp.model.events_local[i].id == calendarevent.id)){
                     found = true;
                     result = i;
                 }   
