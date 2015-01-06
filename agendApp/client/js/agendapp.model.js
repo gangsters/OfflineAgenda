@@ -7,7 +7,7 @@ agendapp.model = {
 	localDB: {
 		db: null,
 		open: function(callback1, callback2) {
-			var version = 21;
+			var version = 25;
 			console.log('Opening local database');
 			var request = indexedDB.open("agendapp", version);
 
@@ -456,6 +456,21 @@ else {
 	 	return result;
 	 },
 
+	events_server_contains: function(calendarevent){
+	 	var result = false;
+	 	if (typeof calendarevent.id != 'undefined'){
+	 		var length = agendapp.model.events_server.length;
+	 		var i = 0;
+	 		while (!result && i<length) {
+	 			if(typeof agendapp.model.events_server[i].id != 'undefined'){
+	 				result = agendapp.model.events_server[i].id == calendarevent.id;
+	 			}
+	 			i++;
+	 		}
+	 	}
+	 	return result;
+	 },
+
 	/**
 	 * Retrieve the index of the array where a similar calendarevent (based on id only) is.
 	 * Comparaison is based on ID.
@@ -522,7 +537,7 @@ else {
 				serverevent.isDirty = false;
 				serverevent.toDelete = false;
 				serverevent.id = parseInt(serverevent.id);
-				agendapp.model.events_local.push(serverevent);
+				// agendapp.model.events_local.push(serverevent);
 				serverevent.save_to_localdb();
 			}
 			// if server event is in events_local => resolving
@@ -535,7 +550,7 @@ else {
 					console.log('		Server event is different from its local pair.');
 					// local dirty (modified) => local event wins over server event // CHOICE TO PRIVILEGE LOCAL
 					if (localevent.isDirty && !localevent.toDelete) {
-						console.log('			Local event dirty, save it to server.');
+						console.log('			Local event dirty, save it to server. END.');
 						localevent.save_to_server(function (result){
 							if(result.error == 'OK'){
 								localevent.isDirty = false;
@@ -545,20 +560,18 @@ else {
 					}
 					// local dirty to delete (modifed locally then deleted) => delete everywhere
 					else if (localevent.isDirty && localevent.toDelete) {
-						console.log('			Local event to delete, delete it from server.');
+						console.log('			Local event to delete, delete it from server. END.');
 						localevent.delete_of_server(function (result){
 							if(result.error == 'OK'){
-								agendapp.model.events_local.slice(localevent_position, 1);
 								agendapp.model.events_local[localevent_position].delete_of_localdb();
 							}
 						});
 					}
 					// local not dirty (not modified) = server event is dirty => server event win over local event
 					else {
-						console.log('			Local event not dirty, keep the server one.');
+						console.log('			Local event not dirty, keep the server one. END.');
 						serverevent.isDirty = false;
-						agendapp.model.events_local.slice(localevent_position, 1);
-						agendapp.model.events_local.push(serverevent);
+						// agendapp.model.events_local.push(serverevent);
 						serverevent.save_to_localdb();
 					}
 				}
@@ -571,30 +584,23 @@ else {
 		// push local dirty events -> server. Then clean them (delete or undirty).
 		var events_local_temp = agendapp.model.events_local;
         var locallength = events_local_temp.length;
-		console.log('---Local events to push (id needed) : '+locallength);
 		for (var i = 0; i <locallength; i++) {
-			// dirty events
-			if ((events_local_temp[i].isDirty != 'undefined') && events_local_temp[i].isDirty) {
+			if(!agendapp.model.events_server_contains(events_local_temp[i])) {
+				console.log('	Local event is not in events_server.');
 				// events to delete
 				if ((events_local_temp[i].toDelete != 'undefined') && events_local_temp[i].toDelete) {
-					events_local_temp[i].delete_of_server(function (result){
-						if(result.error == 'OK') {
-							events_local_temp[i].delete_of_localdb(function(){
-								agendapp.model.events_local.slice(i, 1);
-								console.log('An event was permanently deleted.');
-							});
-						}
-					});
+					console.log('		Local event already deleted. END.');
+					events_local_temp[i].delete_of_localdb();
 				}
 				// events to create or update
 				else{
+					console.log('		Save new localevent to server. END.');
 					var calendarevent = events_local_temp[i];
-					events_local_temp[i].save_to_server(function (result){
+					calendarevent.save_to_server(function (result){
 						if(result.error == 'OK'){
 							calendarevent.isDirty = false;
-							calendarevent.save_to_localdb(function(){
-								console.log('A created or updated event was pushed to server.');
-							});
+							calendarevent.id = parseInt(result.id);
+							calendarevent.save_to_localdb();
 						}
 					});
 				}
